@@ -1,0 +1,12 @@
+.\objects\glcd_scroll.o: ..\..\additional_files\GLCD_Scroll.c
+.\objects\glcd_scroll.o: C:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include\LPC17xx.h
+.\objects\glcd_scroll.o: C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\core_cm3.h
+.\objects\glcd_scroll.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\glcd_scroll.o: C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_version.h
+.\objects\glcd_scroll.o: C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_compiler.h
+.\objects\glcd_scroll.o: C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_armcc.h
+.\objects\glcd_scroll.o: C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\mpu_armv7.h
+.\objects\glcd_scroll.o: C:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include\system_LPC17xx.h
+.\objects\glcd_scroll.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\glcd_scroll.o: ..\..\additional_files\glcd.h
+.\objects\glcd_scroll.o: ..\..\additional_files\glcd_scroll.h
