@@ -22,6 +22,7 @@ void GUI_Start(void){
 	GLCD_Init();
 	GLCD_Clear(Black);
 	//no need mutex here because only the GUI tasks will access it
+	sel_lev = 1;
 	GLCD_DisplayChar(14,18,0,'>');
 	GLCD_DisplayString(14, 20, 0, "Level 1");
 	GLCD_DisplayString(18, 20, 0, "Level 2");
@@ -44,6 +45,8 @@ void GUI_Task(void *arg){	//pass in pointer to the character movement
 }
 
 void GUI_Level_Menu(void){
+	
+	bool level_changed = false;
 	osMutexAcquire(pot_val_id,osWaitForever);
 	if(pot_in->down > pot_in->up){
 		pot_in->down = 0;
@@ -51,25 +54,31 @@ void GUI_Level_Menu(void){
 		pot_in->left = 0;
 		pot_in->right = 0;//maybe make this all into a function
 		sel_lev = 2;
+		level_changed = true;
 	}
-	else{
+	else if (pot_in->up > pot_in->down){
 		pot_in->down = 0;
 		pot_in->up = 0;
 		pot_in->left = 0;
 		pot_in->right = 0;//maybe make this all into a function
-		sel_lev = 1;			
+		sel_lev = 1;
+		level_changed = true;
 	}
 	osMutexRelease(pot_val_id);
-	if (sel_lev == 1){
-		GLCD_ClearLn(18,0);
-		GLCD_DisplayString(18, 20, 0, "Level 2");
-		GLCD_DisplayChar(14,18,0,'>');
+	
+	if(level_changed) {
+		if (sel_lev == 1){
+			GLCD_ClearLn(18,0);
+			GLCD_DisplayString(18, 20, 0, "Level 2");
+			GLCD_DisplayChar(14,18,0,'>');
+		}
+		else{
+			GLCD_ClearLn(14,0);
+			GLCD_DisplayString(14, 20, 0, "Level 1");
+			GLCD_DisplayChar(18,18,0,'>');
+		}	
 	}
-	else{
-		GLCD_ClearLn(14,0);
-		GLCD_DisplayString(14, 20, 0, "Level 1");
-		GLCD_DisplayChar(18,18,0,'>');
-	}			
+	
 	if (button_pressed){
 		GLCD_Clear(Black);
 		if(sel_lev == 1){
