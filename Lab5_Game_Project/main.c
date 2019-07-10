@@ -9,7 +9,7 @@
 
 void init(void){
 	GUI_Start();
-	pot_in = malloc(sizeof(pot_count_t));
+	joy_in = malloc(sizeof(joy_count_t));
 }
 
 int main(void){

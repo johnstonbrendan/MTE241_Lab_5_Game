@@ -10,8 +10,6 @@
 #define LEVEL1 1
 #define LEVEL2 2
 
-osMutexId_t game_state_id; // Mutex ID
-osMutexId_t pot_val_id;
 uint8_t sel_lev;
 
 //need to make the ISR for button press below is a temp variable to store the button press
@@ -47,24 +45,24 @@ void GUI_Task(void *arg){	//pass in pointer to the character movement
 void GUI_Level_Menu(void){
 	
 	bool level_changed = false;
-	osMutexAcquire(pot_val_id,osWaitForever);
-	if(pot_in->down > pot_in->up){
-		pot_in->down = 0;
-		pot_in->up = 0;
-		pot_in->left = 0;
-		pot_in->right = 0;//maybe make this all into a function
+	osMutexAcquire(joy_val_id,osWaitForever);
+	if(joy_in->down > joy_in->up){
+		joy_in->down = 0;
+		joy_in->up = 0;
+		joy_in->left = 0;
+		joy_in->right = 0;//maybe make this all into a function
 		sel_lev = 2;
 		level_changed = true;
 	}
-	else if (pot_in->up > pot_in->down){
-		pot_in->down = 0;
-		pot_in->up = 0;
-		pot_in->left = 0;
-		pot_in->right = 0;//maybe make this all into a function
+	else if (joy_in->up > joy_in->down){
+		joy_in->down = 0;
+		joy_in->up = 0;
+		joy_in->left = 0;
+		joy_in->right = 0;//maybe make this all into a function
 		sel_lev = 1;
 		level_changed = true;
 	}
-	osMutexRelease(pot_val_id);
+	osMutexRelease(joy_val_id);
 	
 	if(level_changed) {
 		if (sel_lev == 1){
