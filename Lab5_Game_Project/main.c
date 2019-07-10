@@ -8,6 +8,7 @@
 #include "type_declarations.h"
 #include "pushbutton.h"
 
+osThreadId_t GUI_Thread, Pot_Thread; //... add more!
 
 void init(void){
 	GUI_Start();
@@ -18,9 +19,9 @@ void init(void){
 int main(void){
 	init();
 	osKernelInitialize();
-	osThreadNew(GUI_Task,NULL,NULL);
+	GUI_Thread = osThreadNew(GUI_Task,NULL,NULL);
 	osKernelStart();
-	return 0;
+	for(;;);
 }
 	
 	
