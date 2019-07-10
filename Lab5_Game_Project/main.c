@@ -11,4 +11,13 @@ void init(void){
 	GUI_Start();
 	pot_in = malloc(sizeof(pot_count_t));
 }
+
+int main(void){
+	init();
+	osKernelInitialize();
+	osThreadNew(GUI_Task,NULL,NULL);
+	osKernelStart();
+	return 0;
+}
+	
 	
