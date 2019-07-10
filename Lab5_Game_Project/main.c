@@ -12,7 +12,7 @@
 void init(void){
 	GUI_Start();
 	setup_INT0();
-	joy_in = malloc(sizeof(joy_count_t));
+	Joy_init();
 }
 
 int main(void){

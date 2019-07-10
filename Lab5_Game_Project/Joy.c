@@ -3,6 +3,10 @@
 joy_count_t* joy_in;
 osMutexId_t joy_val_id;
 
+void Joy_init() {
+	joy_in = malloc(sizeof(joy_count_t));
+}
+
 void Joy_Task (void*arg){
 	uint8_t joystickValues = 0x0;
 
