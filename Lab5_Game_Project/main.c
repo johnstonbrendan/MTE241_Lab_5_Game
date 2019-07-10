@@ -6,9 +6,12 @@
 #include "GLCD.h"
 #include "GUI.h"
 #include "type_declarations.h"
+#include "pushbutton.h"
+
 
 void init(void){
 	GUI_Start();
+	setup_INT0();
 	joy_in = malloc(sizeof(joy_count_t));
 }
 

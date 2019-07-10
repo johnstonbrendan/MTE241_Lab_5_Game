@@ -5,15 +5,16 @@
 #include "cmsis_os2.h"
 #include "type_declarations.h"
 #include <stdbool.h>
+#include "pushbutton.h"
 
 #define MAINMENU 0
 #define LEVEL1 1
 #define LEVEL2 2
 
 uint8_t sel_lev;
+osMutexId_t game_state_id;
 
 //need to make the ISR for button press below is a temp variable to store the button press
-bool button_pressed;
 
 
 void GUI_Start(void){
@@ -77,7 +78,8 @@ void GUI_Level_Menu(void){
 		}	
 	}
 	
-	if (button_pressed){
+	if (button_pushed){
+		button_pushed = false;
 		GLCD_Clear(Black);
 		if(sel_lev == 1){
 			game_state = LEVEL1;

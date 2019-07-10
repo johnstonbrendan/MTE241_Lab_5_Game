@@ -2,6 +2,9 @@
 #include <lpc17xx.h>
 #include "type_declarations.h"
 
+uint32_t pot_val;
+osMutexId_t pot_val_id;
+
 void Pot_Task(void*arg){
 	LPC_PINCON -> PINSEL1 &= ~(0x03<<18);
 	LPC_PINCON -> PINSEL1 |= (0x01<<18);

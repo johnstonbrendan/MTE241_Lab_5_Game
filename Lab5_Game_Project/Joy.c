@@ -1,5 +1,8 @@
 #include "Joy.h"
 
+joy_count_t* joy_in;
+osMutexId_t joy_val_id;
+
 void Joy_Task (void*arg){
 	uint8_t joystickValues = 0x0;
 
