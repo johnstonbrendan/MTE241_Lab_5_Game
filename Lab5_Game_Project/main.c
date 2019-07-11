@@ -19,8 +19,8 @@ void init(void){
 }
 
 int main(void){
-	init();
 	osKernelInitialize();
+	init();
 	GUI_Thread = osThreadNew(GUI_Task,NULL,NULL);
 	Pot_Thread = osThreadNew(Pot_Task,NULL,NULL);
 	Joy_Thread = osThreadNew(Joy_Task,NULL,NULL);

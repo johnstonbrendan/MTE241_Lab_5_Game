@@ -19,28 +19,30 @@ uint8_t game_state;
 
 void GUI_Start(void){
 	GLCD_Init();
-	GLCD_Clear(Black);
+	GLCD_Clear(Blue);
 	//no need mutex here because only the GUI tasks will access it
 	sel_lev = 1;
+	GLCD_DisplayString(14, 18, 0, "  Level 1");
+	GLCD_DisplayString(18, 18, 0, "  Level 2");
 	GLCD_DisplayChar(14,18,0,'>');
-	GLCD_DisplayString(14, 20, 0, "Level 1");
-	GLCD_DisplayString(18, 20, 0, "Level 2");
 	game_state = MAINMENU;//no need mutex as the threads have not started yet
 }
 
 
 void GUI_Task(void *arg){	//pass in pointer to the character movement
-	if(game_state == MAINMENU){
-		GUI_Level_Menu();
+	while(true){
+		if(game_state == MAINMENU){
+			GUI_Level_Menu();
+		}
+		else if (game_state == LEVEL1){
+			GLCD_DisplayString(20,20,0,"LEVEL 1 PLACEHOLDER");
+			//do stuff for level 1 GUI
+		}
+		else if (game_state == LEVEL2){
+			GLCD_DisplayString(20,20,0,"LEVEL 2 PLACEHOLDER");
+			//do stuff for level 2 GUI
+		}	
 	}
-	else if (game_state == LEVEL1){
-		GLCD_DisplayString(20,20,0,"LEVEL 1 PLACEHOLDER");
-		//do stuff for level 1 GUI
-	}
-	else if (game_state == LEVEL2){
-		GLCD_DisplayString(20,20,0,"LEVEL 2 PLACEHOLDER");
-		//do stuff for level 2 GUI
-	}	
 }
 
 void GUI_Level_Menu(void){
@@ -67,13 +69,11 @@ void GUI_Level_Menu(void){
 	
 	if(level_changed) {
 		if (sel_lev == 1){
-			GLCD_ClearLn(18,0);
-			GLCD_DisplayString(18, 20, 0, "Level 2");
+			GLCD_DisplayString(18, 18, 0, "  Level 2");
 			GLCD_DisplayChar(14,18,0,'>');
 		}
 		else{
-			GLCD_ClearLn(14,0);
-			GLCD_DisplayString(14, 20, 0, "Level 1");
+			GLCD_DisplayString(14, 18, 0, "  Level 1");
 			GLCD_DisplayChar(18,18,0,'>');
 		}	
 	}
