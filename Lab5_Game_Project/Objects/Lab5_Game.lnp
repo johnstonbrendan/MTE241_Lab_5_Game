@@ -1,0 +1,18 @@
+--cpu Cortex-M3
+".\objects\glcd_scroll.o"
+".\objects\glcd_spi_lpc1700.o"
+".\objects\retarget.o"
+".\objects\uart.o"
+".\objects\main.o"
+".\objects\gui.o"
+".\objects\joy.o"
+".\objects\pot.o"
+".\objects\pushbutton.o"
+"..\..\..\..\..\..\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\RTX\Library\ARM\RTX_CM3.lib"
+".\objects\rtx_lib.o"
+".\objects\rtx_config.o"
+".\objects\startup_lpc17xx.o"
+".\objects\system_lpc17xx.o"
+--ro-base 0x00000000 --entry 0x00000000 --rw-base 0x10000000 --entry Reset_Handler --first __Vectors --strict --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\Lab5_Game.map" -o .\Objects\Lab5_Game.axf

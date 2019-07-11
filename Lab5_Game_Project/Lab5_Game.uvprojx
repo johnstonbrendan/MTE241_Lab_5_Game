@@ -437,6 +437,51 @@
               <FileType>1</FileType>
               <FilePath>.\main.c</FilePath>
             </File>
+            <File>
+              <FileName>GUI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\GUI.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\GUI.h</FilePath>
+            </File>
+            <File>
+              <FileName>Joy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Joy.c</FilePath>
+            </File>
+            <File>
+              <FileName>Joy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Joy.h</FilePath>
+            </File>
+            <File>
+              <FileName>Pot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Pot.c</FilePath>
+            </File>
+            <File>
+              <FileName>Pot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Pot.h</FilePath>
+            </File>
+            <File>
+              <FileName>pushbutton.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\pushbutton.c</FilePath>
+            </File>
+            <File>
+              <FileName>pushbutton.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\pushbutton.h</FilePath>
+            </File>
+            <File>
+              <FileName>type_declarations.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\type_declarations.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

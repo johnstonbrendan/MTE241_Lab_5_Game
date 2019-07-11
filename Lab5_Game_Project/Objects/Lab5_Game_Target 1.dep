@@ -45,7 +45,90 @@ I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\mpu
 I (C:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include\system_LPC17xx.h)(0x584985E2)
 I (..\..\additional_files\uart.h)(0x5D234F52)
 F (..\..\additional_files\uart.h)(0x5D234F52)()
-F (.\main.c)(0x5D23A336)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\CMSIS-I.\RTE\Device\LPC1768-I.\RTE\_Target_1-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\Include-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\RTX\Include-IC:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include-D__UVISION_VERSION="527" -D_RTE_ -DLPC175x_6x-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\main.c)(0x5D274AAC)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\CMSIS-I.\RTE\Device\LPC1768-I.\RTE\_Target_1-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\Include-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\RTX\Include-IC:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include-D__UVISION_VERSION="527" -D_RTE_ -DLPC175x_6x-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (C:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include\lpc17xx.h)(0x584985E2)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\core_cm3.h)(0x5C8FF694)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F75EE)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_version.h)(0x5B97BD04)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_compiler.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_armcc.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\mpu_armv7.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include\system_LPC17xx.h)(0x584985E2)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F75EC)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599F75EC)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599F75EE)
+I (cmsis_os2.h)(0x5D235246)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x599F75EC)
+I (GLCD.h)(0x5D234F52)
+I (GUI.h)(0x5D2669FE)
+I (type_declarations.h)(0x5D2669FE)
+I (pushbutton.h)(0x5D26239D)
+I (Joy.h)(0x5D274A05)
+I (Pot.h)(0x5D274CCF)
+F (.\GUI.c)(0x5D274C90)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\CMSIS-I.\RTE\Device\LPC1768-I.\RTE\_Target_1-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\Include-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\RTX\Include-IC:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include-D__UVISION_VERSION="527" -D_RTE_ -DLPC175x_6x-o .\objects\gui.o --omf_browse .\objects\gui.crf --depend .\objects\gui.d)
+I (GLCD.h)(0x5D234F52)
+I (GUI.h)(0x5D2669FE)
+I (type_declarations.h)(0x5D2669FE)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F75EC)
+I (C:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include\lpc17xx.h)(0x584985E2)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\core_cm3.h)(0x5C8FF694)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F75EE)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_version.h)(0x5B97BD04)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_compiler.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_armcc.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\mpu_armv7.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include\system_LPC17xx.h)(0x584985E2)
+I (cmsis_os2.h)(0x5D235246)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x599F75EC)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599F75EE)
+I (pushbutton.h)(0x5D26239D)
+F (.\GUI.h)(0x5D2669FE)()
+F (.\Joy.c)(0x5D274A05)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\CMSIS-I.\RTE\Device\LPC1768-I.\RTE\_Target_1-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\Include-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\RTX\Include-IC:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include-D__UVISION_VERSION="527" -D_RTE_ -DLPC175x_6x-o .\objects\joy.o --omf_browse .\objects\joy.crf --depend .\objects\joy.d)
+I (Joy.h)(0x5D274A05)
+I (type_declarations.h)(0x5D2669FE)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F75EC)
+I (C:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include\lpc17xx.h)(0x584985E2)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\core_cm3.h)(0x5C8FF694)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F75EE)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_version.h)(0x5B97BD04)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_compiler.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_armcc.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\mpu_armv7.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include\system_LPC17xx.h)(0x584985E2)
+I (cmsis_os2.h)(0x5D235246)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x599F75EC)
+F (.\Joy.h)(0x5D274A05)()
+F (.\Pot.c)(0x5D274CD1)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\CMSIS-I.\RTE\Device\LPC1768-I.\RTE\_Target_1-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\Include-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\RTX\Include-IC:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include-D__UVISION_VERSION="527" -D_RTE_ -DLPC175x_6x-o .\objects\pot.o --omf_browse .\objects\pot.crf --depend .\objects\pot.d)
+I (C:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include\lpc17xx.h)(0x584985E2)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\core_cm3.h)(0x5C8FF694)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F75EE)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_version.h)(0x5B97BD04)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_compiler.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_armcc.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\mpu_armv7.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include\system_LPC17xx.h)(0x584985E2)
+I (Pot.h)(0x5D274CCF)
+I (type_declarations.h)(0x5D2669FE)
+I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x599F75EC)
+I (cmsis_os2.h)(0x5D235246)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x599F75EC)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599F75EE)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\Include\cmsis_os2.h)(0x5C8FC058)
+F (.\Pot.h)(0x5D274CCF)()
+F (.\pushbutton.c)(0x5D274C5F)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\CMSIS-I.\RTE\Device\LPC1768-I.\RTE\_Target_1-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\Include-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\RTX\Include-IC:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include-D__UVISION_VERSION="527" -D_RTE_ -DLPC175x_6x-o .\objects\pushbutton.o --omf_browse .\objects\pushbutton.crf --depend .\objects\pushbutton.d)
+I (pushbutton.h)(0x5D26239D)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599F75EE)
+I (C:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include\LPC17xx.h)(0x584985E2)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\core_cm3.h)(0x5C8FF694)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599F75EE)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_version.h)(0x5B97BD04)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_compiler.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_armcc.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\mpu_armv7.h)(0x5C8FF694)
+I (C:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include\system_LPC17xx.h)(0x584985E2)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599F75EC)
+F (.\pushbutton.h)(0x5D26239D)()
+F (.\type_declarations.h)(0x5D2669FE)()
 F (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\RTX\Library\ARM\RTX_CM3.lib)(0x5C8C08BA)()
 F (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\RTX\Source\rtx_lib.c)(0x5C8FF694)(--c99 --gnu -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections-I.\RTE\CMSIS-I.\RTE\Device\LPC1768-I.\RTE\_Target_1-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\Include-IC:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\RTOS2\RTX\Include-IC:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include-D__UVISION_VERSION="527" -D_RTE_ -DLPC175x_6x-o .\objects\rtx_lib.o --omf_browse .\objects\rtx_lib.crf --depend .\objects\rtx_lib.d)
 I (C:\Users\johns\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include\cmsis_compiler.h)(0x5C8FF694)

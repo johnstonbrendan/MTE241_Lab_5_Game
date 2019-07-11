@@ -13,7 +13,7 @@
 
 uint8_t sel_lev;
 osMutexId_t game_state_id;
-
+uint8_t game_state;
 //need to make the ISR for button press below is a temp variable to store the button press
 
 

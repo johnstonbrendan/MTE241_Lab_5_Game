@@ -1,6 +1,8 @@
-#include "Pot.h"
 #include <lpc17xx.h>
+#include "Pot.h"
 #include "type_declarations.h"
+#include <stdbool.h>
+#include <cmsis_os2.h>
 
 uint32_t pot_val;
 osMutexId_t pot_val_id;
@@ -23,6 +25,6 @@ void Pot_Task(void*arg){
 		osMutexAcquire(pot_val_id, osWaitForever);
 		pot_val = (LPC_ADC->ADGDR & 0xFFF0) >> 4;
 		osMutexRelease(pot_val_id);
-		osDelay(osKernelGetSysTimerFreq / EXEC_FREQ);
+		osDelay(osKernelGetSysTimerFreq() / EXEC_FREQ);
 	}
 }
