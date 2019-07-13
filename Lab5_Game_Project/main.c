@@ -9,10 +9,12 @@
 #include "pushbutton.h"
 #include "Joy.h"
 #include "Pot.h"
+#include "enemy.h"
 
 osThreadId_t GUI_Thread, Pot_Thread, Joy_Thread; //... add more!
 
 void init(void){
+	enemy_init();
 	GUI_Start();
 	setup_INT0();
 	Joy_init();

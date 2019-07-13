@@ -49,8 +49,6 @@ void player_task(void* args){
                 player_delta->y = intended_y - player_pos->y;
             }
         osMutexRelease(player_loc_id);
-
-        
         osDelay(osKernelGetSysTimerFreq() / PLAYER_EXEC_FREQ);
     }
 }

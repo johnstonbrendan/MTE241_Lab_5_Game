@@ -6,10 +6,13 @@
 #include "type_declarations.h"
 #include <stdbool.h>
 #include "pushbutton.h"
+#include "enemy.h"
+
 
 #define MAINMENU 0
 #define LEVEL1 1
 #define LEVEL2 2
+#define COMPLETE 3
 
 uint8_t sel_lev;
 osMutexId_t game_state_id;
@@ -25,16 +28,18 @@ void GUI_Start(void){
 	GLCD_DisplayString(14, 18, 0, "  Level 1");
 	GLCD_DisplayString(18, 18, 0, "  Level 2");
 	GLCD_DisplayChar(14,18,0,'>');
+	game_state_id = osMutexNew(NULL);
 	game_state = MAINMENU;//no need mutex as the threads have not started yet
 }
 
 
-void GUI_Task(void *arg){	//pass in pointer to the character movement
+void GUI_Task(void *arg){
 	while(true){
 		if(game_state == MAINMENU){
 			GUI_Level_Menu();
 		}
 		else if (game_state == LEVEL1){
+			GUI_Level_1();
 			GLCD_DisplayString(20,20,0,"LEVEL 1 PLACEHOLDER");
 			//do stuff for level 1 GUI
 		}
@@ -42,11 +47,26 @@ void GUI_Task(void *arg){	//pass in pointer to the character movement
 			GLCD_DisplayString(20,20,0,"LEVEL 2 PLACEHOLDER");
 			//do stuff for level 2 GUI
 		}	
+		else if (game_state == COMPLETE)
 	}
 }
 
 
+void GUI_Level_1(void){
+	GLCD_Bitmap(/*pass it in here*/);
+	while(game_state == LEVEL1){
+		osMutexAcquire()
+			for (int i = 0; i < NUM_OF_ENEMIES; i++) {
+				GLCD_Bitmap(enemies[i]->x, enemies[i]->y, ENEMY_WIDTH, ENEMY_HEIGHT, ENEMY_BITM)
+				//this probably needs to be animate instead			
+			}
+		os
+	}
+	//load background bitmap
+	//load enimies
+	//load main character
 
+}
 
 
 

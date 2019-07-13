@@ -14,9 +14,15 @@ typedef struct{
 }joy_count_t;
 
 typedef struct{
-	uint8_t x;
-	uint8_t y;
+	int16_t x;
+	int16_t y;
 }char_pos_t;
+
+typedef struct {
+	char_pos_t *pos;
+	char_pos_t *delta;
+	bool teleport;
+} char_info_t;
 
 
 extern uint8_t game_state;
@@ -24,11 +30,10 @@ extern joy_count_t* joy_in;
 extern uint32_t pot_val;
 	
 extern osMutexId_t joy_val_id;
-
 extern osMutexId_t pot_val_id;
-
-
 extern osMutexId_t game_state_id;
+extern osMutexId_t player_loc_id;
+extern osMutexId_t enemy_loc_id;
 
 
 
