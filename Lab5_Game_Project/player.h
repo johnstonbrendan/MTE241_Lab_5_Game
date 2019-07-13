@@ -11,6 +11,7 @@ osMutexId_t player_loc_id;
 char_pos_t *player_pos;
 char_pos_t *player_delta;
 void player_task(void* args);
+void ensureLegal(int32_t *x, int32_t *y);
 
 
 #endif

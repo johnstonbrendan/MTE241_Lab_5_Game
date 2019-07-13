@@ -20,3 +20,6 @@
 .\objects\main.o: Joy.h
 .\objects\main.o: type_declarations.h
 .\objects\main.o: Pot.h
+.\objects\main.o: enemy.h
+.\objects\main.o: type_declarations.h
+.\objects\main.o: bitmaps.h

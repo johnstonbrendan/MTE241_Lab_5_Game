@@ -3,8 +3,11 @@
 #include "player.h"
 #include "type_declarations.h"
 #include "enemy.h"
+#include "pushbutton.h"
 
 #define LADDER_HEIGHT 30
+#define SCREEN_HEIGHT 240
+#define SCREEN_WIDTH 320
 
 
 void player_init(uint8_t initX, uint8_t initY) { 
@@ -41,7 +44,7 @@ void player_task(void* args){
             int32_t intended_x = player_pos->x + player_delta->x + horizontalMove;
             int32_t intended_y = player_pos->y + player_delta->y + verticalMove;
 
-            ensureLegal(intended_x, intended_y);
+            ensureLegal(&intended_x, &intended_y);
             
             player_delta->x = intended_y - player_pos->y;
 
@@ -53,25 +56,25 @@ void player_task(void* args){
     }
 }
 
-void ensureLegal(uint32_t &x, uint32_t &y) { 
+void ensureLegal(int32_t *x, int32_t *y) { 
 
     // NOTE: May have to be less depending on how the bitmap rendering works
-    if(x > SCREEN_WIDTH) { 
-        x = SCREEN_WIDTH;
-    } else if(x < 0) { 
-        x = 0;
+    if(*x > SCREEN_WIDTH) { 
+        *x = SCREEN_WIDTH;
+    } else if((*x) < 0) { 
+        *x = 0;
     }
 
-    if(y > SCREEN_HEIGHT) {
-        y = SCREEN_HEIGHT;
-    } else if (y < 0) { 
-        y = 0;
+    if(*y > SCREEN_HEIGHT) {
+        *y = SCREEN_HEIGHT;
+    } else if ((*y) < 0) { 
+        *y = 0;
     }
 
-    char_pos_t enemyInPath = enemy_in_path(player_pos->x, x, y);
+    char_pos_t *enemyInPath = enemy_in_path(player_pos->x, *x, *y);
     if(!(enemyInPath -> x == enemyInPath->y == -1)) { 
-        x = enemyInPath->x;
-        y = enemyInPath->y;
+        *x = enemyInPath->x;
+        *y = enemyInPath->y;
     }
         
 }

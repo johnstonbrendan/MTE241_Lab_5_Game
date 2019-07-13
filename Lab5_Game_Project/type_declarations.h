@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <lpc17xx.h>
 #include "cmsis_os2.h"
+#include <stdbool.h>
 
 #ifndef _TYPE_DECL_H
 #define _TYPE_DECL_H

@@ -6,51 +6,54 @@
 #include "Pot.h"
 #include <math.h>
 
+osMutexId_t enemy_loc_id;
 
+uint32_t enemy_time;
+const uint8_t ENEMY_BIT[NUM_OF_ENEMIES][NUM_OF_FRAMES][900];
+char_info_t enemies[NUM_OF_ENEMIES];
 
 void enemy_init(void){
 	enemy_loc_id = osMutexNew(NULL);
-	enemies = malloc(sizeof(char_pos_t)*NUM_OF_ENEMIES);
 	enemy_time = 0;
-	osMutexAcquire(enemy_loc_id)
+	osMutexAcquire(enemy_loc_id,osWaitForever);
 	for (int i = 0; i <NUM_OF_ENEMIES; i++){
-		enemies[i] = enemy_path(i, enemy_time);
+		*(enemies[i].pos) = enemy_path(i, enemy_time);
 		//can't just do this need to have the delta and all that stuff here too'
 	}
 	osMutexRelease(enemy_loc_id);
 }
 
-void enemy_task(void){
-	osMutexAcquire(pot_val_id);
+void enemy_task(void *arg){
+	osMutexAcquire(pot_val_id,osWaitForever);
 	enemy_time = pot_val - 4096/2;
 	osMutexRelease(pot_val_id);
-	osMutexAcquire(enemy_loc_id);
+	osMutexAcquire(enemy_loc_id,osWaitForever);
 	for (int i = 0; i < NUM_OF_ENEMIES; i++){
-		enemies[i] = enemy_path(i, enemy_time);
+		*(enemies[i].pos) = enemy_path(i, enemy_time); //need to change this to add the delta stuff
 	}
 	osMutexRelease(enemy_loc_id);
 }
 
-char_pos_t enemy_in_path(uint32_t start_x, uint32_t end_x, uint32_t y){
+char_pos_t *enemy_in_path(uint32_t start_x, uint32_t end_x, uint32_t y){
 
 }
 
 char_pos_t enemy_path(uint8_t enemy, uint32_t enemy_time){
 	char_pos_t temp_pos;
-	temp_pos->x = temp_pos->y = -1;
+	temp_pos.x = temp_pos.y = -1;
 	switch (enemy){
 	case 1:
-		temp_pos->x = (uint32_t)sin(enemy_time);//probably have to multiply this by some value for display
-		temp_pos->y = 1;//probably need to adjust this for display
+		temp_pos.x = (uint32_t)sin(enemy_time);//probably have to multiply this by some value for display
+		temp_pos.y = 1;//probably need to adjust this for display
 		break;
 	case 2:
-		temp_pos->x = 5;
-		temp_pos->y = (uint32_t)tan(enemy_time);
+		temp_pos.x = 5;
+		temp_pos.y = (uint32_t)tan(enemy_time);
 		break;
 	case 3:
-		temp_pos->x = exp(enemy_time/5);
-		temp_pos->y = tanh(enemy_time);
+		temp_pos.x = exp(enemy_time/5);
+		temp_pos.y = tanh(enemy_time);
 		break;
 	}
-	return temp_pos
+	return temp_pos;
 }

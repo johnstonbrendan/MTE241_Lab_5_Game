@@ -7,6 +7,8 @@
 #include <stdbool.h>
 #include "pushbutton.h"
 #include "enemy.h"
+#include "bitmaps.h"
+
 
 
 #define MAINMENU 0
@@ -22,7 +24,8 @@ uint8_t game_state;
 
 void GUI_Start(void){
 	GLCD_Init();
-	GLCD_Clear(Blue);
+	GLCD_Bitmap(0,0,320,240,background_map);
+	//GLCD_Clear(Blue);
 	//no need mutex here because only the GUI tasks will access it
 	sel_lev = 1;
 	GLCD_DisplayString(14, 18, 0, "  Level 1");
@@ -47,20 +50,23 @@ void GUI_Task(void *arg){
 			GLCD_DisplayString(20,20,0,"LEVEL 2 PLACEHOLDER");
 			//do stuff for level 2 GUI
 		}	
-		else if (game_state == COMPLETE)
+		else if (game_state == COMPLETE){
+			GLCD_DisplayString(20,20,0,"Congrats yo yo you did it!!!!! :)");
+		}
 	}
 }
 
 
 void GUI_Level_1(void){
-	GLCD_Bitmap(/*pass it in here*/);
+	//GLCD_Bitmap(/*pass it in here*/);
 	while(game_state == LEVEL1){
-		osMutexAcquire()
+		osMutexAcquire(enemy_loc_id,osWaitForever);
 			for (int i = 0; i < NUM_OF_ENEMIES; i++) {
-				GLCD_Bitmap(enemies[i]->x, enemies[i]->y, ENEMY_WIDTH, ENEMY_HEIGHT, ENEMY_BITM)
+				i++;//get rid of this
+				//animate_enemy(enemies[i]);//need to create this function
 				//this probably needs to be animate instead			
 			}
-		os
+		osMutexRelease(enemy_loc_id);
 	}
 	//load background bitmap
 	//load enimies

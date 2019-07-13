@@ -10,6 +10,7 @@
 #include "Joy.h"
 #include "Pot.h"
 #include "enemy.h"
+#include "bitmaps.h"
 
 osThreadId_t GUI_Thread, Pot_Thread, Joy_Thread; //... add more!
 

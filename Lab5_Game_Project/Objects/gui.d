@@ -13,6 +13,9 @@
 .\objects\gui.o: C:\Users\johns\AppData\Local\Arm\Packs\Keil\LPC1700_DFP\2.5.0\Device\Include\system_LPC17xx.h
 .\objects\gui.o: cmsis_os2.h
 .\objects\gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-.\objects\gui.o: type_declarations.h
 .\objects\gui.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\gui.o: type_declarations.h
 .\objects\gui.o: pushbutton.h
+.\objects\gui.o: enemy.h
+.\objects\gui.o: type_declarations.h
+.\objects\gui.o: bitmaps.h

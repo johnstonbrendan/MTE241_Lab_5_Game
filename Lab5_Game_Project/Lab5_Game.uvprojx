@@ -482,6 +482,36 @@
               <FileType>5</FileType>
               <FilePath>.\type_declarations.h</FilePath>
             </File>
+            <File>
+              <FileName>enemy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\enemy.c</FilePath>
+            </File>
+            <File>
+              <FileName>player.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\player.c</FilePath>
+            </File>
+            <File>
+              <FileName>bitmaps.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\bitmaps.h</FilePath>
+            </File>
+            <File>
+              <FileName>enemy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\enemy.h</FilePath>
+            </File>
+            <File>
+              <FileName>player.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\player.h</FilePath>
+            </File>
+            <File>
+              <FileName>bitmaps.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\bitmaps.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
