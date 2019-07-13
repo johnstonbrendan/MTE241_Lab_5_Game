@@ -3,13 +3,13 @@
 #ifndef _PLAYER_H
 #define _PLAYER_H
 
-const uint32_t PLAYER_EXEC_FREQ = 30;
-const uint8_t PLAYER_NUM_BITMAPS = 10;
+#define PLAYER_EXEC_FREQ 30
 
+void player_init(uint8_t initX, uint8_t initY);
 
-osMutexId_t char_pos_id;
-char_pos_t *pos;
-char_pos_t *need_to_go;
+osMutexId_t player_loc_id;
+char_pos_t *player_pos;
+char_pos_t *player_delta;
 void player_task(void* args);
 
 
