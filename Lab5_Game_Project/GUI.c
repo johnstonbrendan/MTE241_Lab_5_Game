@@ -24,8 +24,8 @@ uint8_t game_state;
 
 void GUI_Start(void){
 	GLCD_Init();
-	GLCD_Bitmap(0,0,320,240,background_map);
-	//GLCD_Clear(Blue);
+	//GLCD_Bitmap(0,0,320,240,background_map);
+	GLCD_Clear(Blue);
 	//no need mutex here because only the GUI tasks will access it
 	sel_lev = 1;
 	GLCD_DisplayString(14, 18, 0, "  Level 1");
@@ -62,7 +62,7 @@ void GUI_Level_1(void){
 	while(game_state == LEVEL1){
 		osMutexAcquire(enemy_loc_id,osWaitForever);
 			for (int i = 0; i < NUM_OF_ENEMIES; i++) {
-				i++;//get rid of this
+				animate_enemy(enemies[i]);
 				//animate_enemy(enemies[i]);//need to create this function
 				//this probably needs to be animate instead			
 			}
@@ -74,7 +74,14 @@ void GUI_Level_1(void){
 
 }
 
-
+void animate_enemy(char_info_t enemy){
+	osMutexAcquire(enemy_loc_id,osWaitForever);
+	//GLCD_Bitmap(enemy.pos->x, enemy.pos->y,ENEMY_WIDTH,ENEMY_HEIGHT,NULL);
+	GLCD_Bitmap(enemy.pos->x + enemy.delta->x,enemy.pos->y + enemy.delta->y,ENEMY_WIDTH,ENEMY_HEIGHT,enemy_map);
+	osMutexRelease(enemy_loc_id);
+	
+}
+	
 
 void GUI_Level_Menu(void){
 	

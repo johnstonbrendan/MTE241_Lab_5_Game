@@ -4,8 +4,8 @@
 
 #define NUM_OF_ENEMIES 3
 #define NUM_OF_FRAMES 5
-#define ENEMY_HEIGHT 20
-#define ENEMY_WIDTH 20
+#define ENEMY_HEIGHT 5
+#define ENEMY_WIDTH 5
 
 extern const uint8_t ENEMY_BIT[NUM_OF_ENEMIES][NUM_OF_FRAMES][900];
 

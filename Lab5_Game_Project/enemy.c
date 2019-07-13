@@ -9,11 +9,10 @@
 osMutexId_t enemy_loc_id;
 
 uint32_t enemy_time;
-const uint8_t ENEMY_BIT[NUM_OF_ENEMIES][NUM_OF_FRAMES][900];
+//const uint8_t ENEMY_BIT[NUM_OF_ENEMIES][NUM_OF_FRAMES][900];
 char_info_t enemies[NUM_OF_ENEMIES];
 
 void enemy_init(void){
-	enemy_loc_id = osMutexNew(NULL);
 	enemy_time = 0;
 	osMutexAcquire(enemy_loc_id,osWaitForever);
 	for (int i = 0; i <NUM_OF_ENEMIES; i++){
@@ -29,7 +28,8 @@ void enemy_task(void *arg){
 	osMutexRelease(pot_val_id);
 	osMutexAcquire(enemy_loc_id,osWaitForever);
 	for (int i = 0; i < NUM_OF_ENEMIES; i++){
-		*(enemies[i].pos) = enemy_path(i, enemy_time); //need to change this to add the delta stuff
+		(enemies[i].delta)->x = (enemies[i].pos)->x - enemy_path(i, enemy_time).x; //need to change this to add the delta stuff
+		(enemies[i].delta)->y = (enemies[i].pos)->y - enemy_path(i, enemy_time).y; //need to change this to add the delta stuff
 	}
 	osMutexRelease(enemy_loc_id);
 }
