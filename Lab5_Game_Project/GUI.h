@@ -12,6 +12,10 @@ void GUI_Level_1(void);
 
 void animate_enemy(char_info_t *enemy);
 
-void animate_char(char_info_t player);
+void animate_player(void);
+
+void animate_collisions(void);
+
+uint16_t dist_between_points(uint16_t player_x, uint16_t player_y, uint16_t enemy_x, uint16_t enemy_y);
 
 #endif

@@ -5,13 +5,13 @@
 
 #define PLAYER_EXEC_FREQ 30
 
-void player_init(uint8_t initX, uint8_t initY);
+void player_init(uint16_t initX, uint16_t initY);
 
-osMutexId_t player_loc_id;
-char_pos_t *player_pos;
-char_pos_t *player_delta;
+extern osMutexId_t player_loc_id;
+extern char_info_t* player_info;
 void player_task(void* args);
-void ensureLegal(int32_t *x, int32_t *y);
+void legalize(int16_t* x, int16_t* y);
+extern bool ladder_avaliable(void);
 
 
 #endif

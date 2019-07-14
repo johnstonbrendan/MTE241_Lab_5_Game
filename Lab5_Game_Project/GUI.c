@@ -8,6 +8,8 @@
 #include "pushbutton.h"
 #include "enemy.h"
 #include "bitmaps.h"
+#include "player.h"
+#include <math.h>
 
 
 
@@ -64,9 +66,9 @@ void GUI_Level_1(void){
 	while(game_state == LEVEL1){
 			for (int i = 0; i < NUM_OF_ENEMIES; i++) {
 				animate_enemy(enemies[i]);
-				//animate_enemy(enemies[i]);//need to create this function
-				//this probably needs to be animate instead			
 			}
+			animate_player();
+			animate_collisions();
 	}
 	//load background bitmap
 	//load enimies
@@ -87,7 +89,46 @@ void animate_enemy(char_info_t* enemy){
 	osMutexRelease(enemy_loc_id);
 
 }
+
+
+void animate_player(void){
+	osMutexAcquire(player_loc_id,osWaitForever);
+	player_info->pos.x = player_info->pos.x + player_info->delta.x;
+	player_info->pos.y = player_info->pos.y + player_info->delta.y;
+	player_info->delta.x = 0;
+	player_info->delta.y = 0; //maybe make all this into a function
+//	GLCD_Bitmap(0,0,30,30,enemy_map);
+	GLCD_Bitmap(player_info->pos.x,player_info->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,enemy_map);//needs to change for player
+	osMutexRelease(player_loc_id);
+}
+
+void animate_collisions(void){
+	uint16_t player_x, player_y = 0;
+	osMutexAcquire(player_loc_id,osWaitForever);
+	player_x = player_info->pos.x;
+	player_y = player_info->pos.y;
+	osMutexRelease(player_loc_id);
+	osMutexAcquire(enemy_loc_id,osWaitForever);
+	for (int i = 0; i < NUM_OF_ENEMIES; i++){
+		//need to adjust the y check depending on how the players and enimies are placed on the maps
+		//player_x + PLAYER_WIDTH/2 represents the middle of the player, same logic applies for the enemy
+		//either do below for distance or do the super long if statment for ranges
+		if (dist_between_points(player_x,player_y,enemies[i]->pos.x,enemies[i]->pos.y) < PLAYER_WIDTH/2 + ENEMY_HEIGHT/2) //note this only works for SQUARE AND CIRCULAR CHARACTERS
+		{
+			
+			//do collision stuff
+		}
+		
+		if (check if the edge of one of the box is withing the bound of the locations of x of the other box, boxes being enemyies and players)
+	}
+}
+
+uint16_t dist_between_points(uint16_t player_x, uint16_t player_y, uint16_t enemy_x, uint16_t enemy_y){
 	
+	//use the sqrt and power functions here
+}
+
+
 
 void GUI_Level_Menu(void){
 	

@@ -23,3 +23,5 @@
 .\objects\main.o: enemy.h
 .\objects\main.o: type_declarations.h
 .\objects\main.o: bitmaps.h
+.\objects\main.o: player.h
+.\objects\main.o: type_declarations.h

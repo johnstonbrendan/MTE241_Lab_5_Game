@@ -17,3 +17,4 @@
 .\objects\player.o: enemy.h
 .\objects\player.o: type_declarations.h
 .\objects\player.o: pushbutton.h
+.\objects\player.o: bitmaps.h

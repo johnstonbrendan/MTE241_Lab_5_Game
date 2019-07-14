@@ -8,6 +8,9 @@
 #define ENEMY_HEIGHT (30)
 #define GIMP_IMAGE_BYTES_PER_PIXEL (2) /* 2:RGB16, 3:RGB, 4:RGBA */
 #define GIMP_IMAGE_PIXEL_DATA ((unsigned char*) GIMP_IMAGE_pixel_data)
+	
+#define PLAYER_WIDTH (30)
+#define PLAYER_HEIGHT (30)
 
 extern const unsigned char enemy_map[30*30*2 + 1];
 

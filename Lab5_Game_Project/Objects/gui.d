@@ -19,3 +19,5 @@
 .\objects\gui.o: enemy.h
 .\objects\gui.o: type_declarations.h
 .\objects\gui.o: bitmaps.h
+.\objects\gui.o: player.h
+.\objects\gui.o: type_declarations.h

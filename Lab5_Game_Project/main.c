@@ -11,7 +11,7 @@
 #include "Pot.h"
 #include "enemy.h"
 #include "bitmaps.h"
-//#include "player.h"
+#include "player.h"
 
 osThreadId_t GUI_Thread, Pot_Thread, Joy_Thread, Enemy_Thread, Player_Thread; //... add more!
 
@@ -20,6 +20,7 @@ void init(void){
 	GUI_Start();
 	setup_INT0();
 	Joy_init();
+	player_init(150,70);//start with the player at 0,0
 }
 
 int main(void){
@@ -29,7 +30,7 @@ int main(void){
 	Pot_Thread = osThreadNew(Pot_Task,NULL,NULL);
 	Joy_Thread = osThreadNew(Joy_Task,NULL,NULL);
 	Enemy_Thread = osThreadNew(enemy_task,NULL,NULL);
-//	Player_Thread = osThreadNew(player_task,NULL,NULL);
+	Player_Thread = osThreadNew(player_task,NULL,NULL);
 	osKernelStart();
 	for(;;);
 }
