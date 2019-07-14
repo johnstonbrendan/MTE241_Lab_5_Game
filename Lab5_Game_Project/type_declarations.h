@@ -20,8 +20,8 @@ typedef struct{
 }char_pos_t;
 
 typedef struct {
-	char_pos_t *pos;
-	char_pos_t *delta;
+	char_pos_t pos;
+	char_pos_t delta;
 	bool teleport;
 } char_info_t;
 

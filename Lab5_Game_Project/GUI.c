@@ -33,6 +33,7 @@ void GUI_Start(void){
 	GLCD_DisplayChar(14,18,0,'>');
 	game_state_id = osMutexNew(NULL);
 	game_state = MAINMENU;//no need mutex as the threads have not started yet
+	game_state = LEVEL1;//THIS IS ONLY HERE FOR TESTING
 }
 
 
@@ -42,6 +43,7 @@ void GUI_Task(void *arg){
 			GUI_Level_Menu();
 		}
 		else if (game_state == LEVEL1){
+			GLCD_Clear(Blue);
 			GUI_Level_1();
 			GLCD_DisplayString(20,20,0,"LEVEL 1 PLACEHOLDER");
 			//do stuff for level 1 GUI
@@ -60,13 +62,11 @@ void GUI_Task(void *arg){
 void GUI_Level_1(void){
 	//GLCD_Bitmap(/*pass it in here*/);
 	while(game_state == LEVEL1){
-		osMutexAcquire(enemy_loc_id,osWaitForever);
 			for (int i = 0; i < NUM_OF_ENEMIES; i++) {
 				animate_enemy(enemies[i]);
 				//animate_enemy(enemies[i]);//need to create this function
 				//this probably needs to be animate instead			
 			}
-		osMutexRelease(enemy_loc_id);
 	}
 	//load background bitmap
 	//load enimies
@@ -74,12 +74,18 @@ void GUI_Level_1(void){
 
 }
 
-void animate_enemy(char_info_t enemy){
+void animate_enemy(char_info_t* enemy){
 	osMutexAcquire(enemy_loc_id,osWaitForever);
 	//GLCD_Bitmap(enemy.pos->x, enemy.pos->y,ENEMY_WIDTH,ENEMY_HEIGHT,NULL);
-	GLCD_Bitmap(enemy.pos->x + enemy.delta->x,enemy.pos->y + enemy.delta->y,ENEMY_WIDTH,ENEMY_HEIGHT,enemy_map);
+	//GLCD_Bitmap(100,100,ENEMY_WIDTH,ENEMY_HEIGHT,enemy_map);
+	enemy->pos.x = enemy->pos.x + enemy->delta.x;
+	enemy->pos.y = enemy->pos.y + enemy->delta.y;
+	enemy->delta.x = 0;
+	enemy->delta.y = 0; //maybe make all this into a function
+//	GLCD_Bitmap(0,0,30,30,enemy_map);
+	GLCD_Bitmap(enemy->pos.x,enemy->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,enemy_map);
 	osMutexRelease(enemy_loc_id);
-	
+
 }
 	
 

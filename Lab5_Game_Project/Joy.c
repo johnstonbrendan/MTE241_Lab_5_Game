@@ -6,6 +6,7 @@ osMutexId_t joy_val_id;
 
 void Joy_init() {
 	joy_in = malloc(sizeof(joy_count_t));
+	joy_val_id = osMutexNew(NULL);
 }
 
 void Joy_Task (void*arg){

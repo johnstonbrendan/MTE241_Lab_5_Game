@@ -16,15 +16,15 @@
 osThreadId_t GUI_Thread, Pot_Thread, Joy_Thread, Enemy_Thread, Player_Thread; //... add more!
 
 void init(void){
-	//enemy_init();
+	enemy_init();
 	GUI_Start();
 	setup_INT0();
 	Joy_init();
 }
 
 int main(void){
-	osKernelInitialize();
 	init();
+	osKernelInitialize();
 	GUI_Thread = osThreadNew(GUI_Task,NULL,NULL);
 	Pot_Thread = osThreadNew(Pot_Task,NULL,NULL);
 	Joy_Thread = osThreadNew(Joy_Task,NULL,NULL);

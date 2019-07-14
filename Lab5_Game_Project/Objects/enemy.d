@@ -15,3 +15,4 @@
 .\objects\enemy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\enemy.o: Pot.h
 .\objects\enemy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\enemy.o: bitmaps.h
