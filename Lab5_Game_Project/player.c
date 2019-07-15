@@ -6,10 +6,9 @@
 #include "pushbutton.h"
 #include <stdbool.h>
 #include "bitmaps.h"
+#include "GUI.h"
 
 #define LADDER_HEIGHT 30
-#define SCREEN_HEIGHT 240
-#define SCREEN_WIDTH 320
 
 char_info_t* player_info;
 osMutexId_t	player_loc_id;
@@ -79,17 +78,27 @@ void player_task(void* args){
 void legalize(int16_t* x, int16_t* y) {//may be able to just put this into the loop direclty to save space 
 
     // NOTE: May have to be less depending on how the bitmap rendering works
-	if(*x > SCREEN_WIDTH - PLAYER_WIDTH) { 
-        *x = SCREEN_WIDTH - PLAYER_WIDTH;
+	if(*x > SC_WIDTH - PLAYER_WIDTH) { 
+        *x = SC_WIDTH - PLAYER_WIDTH;
     } else if(*x < 0) { 
         *x = 0;
     }
 
-    if(*y > SCREEN_HEIGHT) {//need to fix this to include player size
-        *y = SCREEN_HEIGHT;
+    if(*y > SC_HEIGHT) {//need to fix this to include player size
+        *y = SC_HEIGHT;
     } else if (*y< 0) { 
         *y = 0;
     }
+
+	int16_t temp_x = *x;
+	int16_t temp_y = *y;
+	while(!isFloor(game_state - 1, temp_x, temp_y)){
+		// bring back x one grassblock width towards player
+		temp_x = temp_x + (temp_x - player_info->pos.x)/abs(temp_x - player_info->pos.x) * BMP_GRASSBLOCK_WIDTH;
+		// we can even add falling like this? maybe?
+	}
+	
+	*x = temp_x;
 
 //    char_pos_t *enemyInPath = enemy_in_path(player_info->pos.x, *x, *y);
 //    if(!(enemyInPath -> x == enemyInPath->y == -1)) { 
