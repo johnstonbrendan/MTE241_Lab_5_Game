@@ -79,13 +79,13 @@ void GUI_Level_1(void){
 void animate_enemy(char_info_t* enemy){
 	osMutexAcquire(enemy_loc_id,osWaitForever);
 	//GLCD_Bitmap(enemy.pos->x, enemy.pos->y,ENEMY_WIDTH,ENEMY_HEIGHT,NULL);
-	//GLCD_Bitmap(100,100,ENEMY_WIDTH,ENEMY_HEIGHT,enemy_map);
+	//GLCD_Bitmap(100,100,ENEMY_WIDTH,ENEMY_HEIGHT,BMP_ENEMY_DATA);
 	enemy->pos.x = enemy->pos.x + enemy->delta.x;
 	enemy->pos.y = enemy->pos.y + enemy->delta.y;
 	enemy->delta.x = 0;
 	enemy->delta.y = 0; //maybe make all this into a function
-//	GLCD_Bitmap(0,0,30,30,enemy_map);
-	GLCD_Bitmap(enemy->pos.x,enemy->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,enemy_map);
+//	GLCD_Bitmap(0,0,30,30,BMP_ENEMY_DATA);
+	GLCD_Bitmap(enemy->pos.x,enemy->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,BMP_ENEMY_DATA);
 	osMutexRelease(enemy_loc_id);
 
 }
@@ -97,8 +97,8 @@ void animate_player(void){
 	player_info->pos.y = player_info->pos.y + player_info->delta.y;
 	player_info->delta.x = 0;
 	player_info->delta.y = 0; //maybe make all this into a function
-//	GLCD_Bitmap(0,0,30,30,enemy_map);
-	GLCD_Bitmap(player_info->pos.x,player_info->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,enemy_map);//needs to change for player
+//	GLCD_Bitmap(0,0,30,30,BMP_ENEMY_DATA);
+	GLCD_Bitmap(player_info->pos.x,player_info->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,BMP_ENEMY_DATA);//needs to change for player
 	osMutexRelease(player_loc_id);
 }
 
