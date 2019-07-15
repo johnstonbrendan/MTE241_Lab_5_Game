@@ -12,17 +12,29 @@
 #include <math.h>
 
 
-
+// Level Definitions
+#define NUM_LEVELS 2
 #define MAINMENU 0
 #define LEVEL1 1
 #define LEVEL2 2
 #define COMPLETE 3
+
+#define NUM_FLOORS 10
 
 uint8_t sel_lev;
 osMutexId_t game_state_id;
 uint8_t game_state;
 //need to make the ISR for button press below is a temp variable to store the button press
 
+const int8_t left_offset[NUM_LEVELS][NUM_FLOORS] = {
+	{0, -1, -1, 2, -1, 1, -1, 0, -1, -1}, 
+	{0, -1, 1, -1, -1, 2, -1, 3, -1, -1}
+};
+
+const int8_t right_offset[NUM_LEVELS][NUM_FLOORS] = {
+	{0, -1, -1, 0, -1, 2, -1, 1, -1, -1},
+	{4, -1, 1, -1, -1, 3, -1, 0, -1, -1} 
+}
 
 void GUI_Start(void){
 	GLCD_Init();
@@ -62,7 +74,7 @@ void GUI_Task(void *arg){
 
 
 void GUI_Level_1(void){
-	//GLCD_Bitmap(/*pass it in here*/);
+	drawBackground(1);
 	while(game_state == LEVEL1){
 			for (int i = 0; i < NUM_OF_ENEMIES; i++) {
 				animate_enemy(enemies[i]);
@@ -173,4 +185,43 @@ void GUI_Level_Menu(void){
 			game_state = LEVEL2;
 		}
 	}	
+}
+
+void drawBackground(uint8_t level){ 
+	if(level > NUM_LEVELS) {
+		GLCD_DisplayString(0, 0, 1, "Invalid lvl drawbg!");
+		for(;;); // get stuck here for debugger!
+	}
+	level--;
+	uint16_t startPixel, endPixel = 0;
+	for(uint8_t i = 0; i < NUM_FLOORS; i++) {
+		if(left_offset[level][i] >= 0 && right_offset[level][i] >= 0) {
+			startPixel = left_offset[level][i]*BMP_GRASSBLOCK_WIDTH;
+			endPixel = SC_WIDTH - right_offset[level][i]*BMP_GRASSBLOCK_WIDTH;
+			for(uint16_t j = startPixel; j < endPixel; j+=BMP_GRASSBLOCK_WIDTH){
+				GLCD_Bitmap(j, i*BMP_GRASSBLOCK_HEIGHT, BMP_GRASSBLOCK_WIDTH, BMP_GRASSBLOCK_HEIGHT, BMP_GRASSBLOCK_DATA);
+			}
+		}
+	}
+}
+
+bool isFloor(uint8_t level, uint16_t x, uint16_t y) { 
+	if(level > NUM_LEVELS) {
+		GLCD_DisplayString(0, 0, 1, "Invalid lvl isFloor!");
+		for(;;); // get stuck here for debugger!
+	}
+
+	level--;
+	uint16_t floor = y / BMP_GRASSBLOCK_HEIGHT - 1;
+	if(floor < 0) floor = 0;
+	
+	if(left_offset[level][floor] < 0) return false;
+	
+	uint8_t blocksAwayFromLeftWall = x/BMP_GRASSBLOCK_WIDTH;
+	if(left_offset[level][floor] <= blocksAwayFromLeftWall 
+		&& (SC_WIDTH/BMP_GRASSBLOCK_WIDTH - right_offset[level][floor]) >= blocksAwayFromLeftWall) {
+			return true;
+	}
+
+	else return false;	
 }

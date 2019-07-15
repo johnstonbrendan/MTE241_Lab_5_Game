@@ -18,4 +18,8 @@ void animate_collisions(void);
 
 uint16_t dist_between_points(uint16_t player_x, uint16_t player_y, uint16_t enemy_x, uint16_t enemy_y);
 
+void drawBackground(uint8_t level);
+
+bool isFloor(uint8_t level, uint16_t x, uint16_t y);
+
 #endif
