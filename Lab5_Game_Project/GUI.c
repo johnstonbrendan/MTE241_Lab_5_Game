@@ -17,7 +17,9 @@
 #define MAINMENU 0
 #define LEVEL1 1
 #define LEVEL2 2
-#define COMPLETE 3
+#define LEVEL1_COMPLETE 3
+#define LEVEL2_COMPLETE 4
+
 
 #define NUM_FLOORS 10
 
@@ -66,21 +68,27 @@ void GUI_Task(void *arg){
 			GLCD_DisplayString(20,20,0,"LEVEL 2 PLACEHOLDER");
 			//do stuff for level 2 GUI
 		}	
-		else if (game_state == COMPLETE){
-			GLCD_DisplayString(20,20,0,"Congrats yo yo you did it!!!!! :)");
+		else if (game_state == LEVEL1_COMPLETE){
+			GLCD_Clear(Green);
+			GLCD_DisplayString(20,20,0,"Congrats yo yo you did it!!!!! nOW TRY LEVEL 2 :)");
+		}
+		else if (game_state == LEVEL2_COMPLETE){
+			GLCD_Clear(Red);
+			GLCD_DisplayString(20,20,0,"Congrats yoU COMPLETED LEVEL 2");
 		}
 	}
 }
 
 
 void GUI_Level_1(void){
-	drawBackground(1);
+	drawBackground(1);//include end goal in the background
 	while(game_state == LEVEL1){
 			animate_player();
 			for (int i = 0; i < NUM_OF_ENEMIES; i++) {
 				animate_enemy(enemies[i]);
 			}
-			animate_collisions();
+			animate_collisions();//collision will handle both hitting an enemy and getting to the end goal
+			//end point stored in bitmaps.h
 	}
 }
 
@@ -116,6 +124,8 @@ void animate_player(void){
 		player_info->delta.x = 0;
 		player_info->delta.y = 0;
 		player_info->teleport = false;
+		player_info->pos.x = PLAYER_INIT_X;
+		player_info->pos.y = PLAYER_INIT_Y;
 		//need to add in some thing that does not animate and instantly moves the player
 		GLCD_Bitmap(player_info->pos.x,player_info->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,BMP_ENEMY_DATA);//needs to change for player
 	}
@@ -162,6 +172,11 @@ void animate_collisions(void){
 		player_info->pos.y = PLAYER_INIT_Y;
 		osMutexRelease(player_loc_id);
 		// do stuff to handle collision like acquiring the mutexes and then teleporting the player back to the original space
+	}
+	if ((player_x == END_X) && (player_y == END_Y)){//this may need to be similiar to collision above instead of just the x,y
+		osMutexAcquire(game_state_id,osWaitForever);
+		game_state = LEVEL1_COMPLETE;
+		osMutexRelease(game_state_id);
 	}
 }
 
