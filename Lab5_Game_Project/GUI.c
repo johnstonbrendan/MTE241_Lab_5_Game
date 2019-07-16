@@ -116,6 +116,7 @@ void animate_player(void){
 
 void animate_collisions(void){
 	uint16_t player_x, player_y = 0;
+	bool collision = false;
 	osMutexAcquire(player_loc_id,osWaitForever);
 	player_x = player_info->pos.x;
 	player_y = player_info->pos.y;
@@ -125,13 +126,32 @@ void animate_collisions(void){
 		//need to adjust the y check depending on how the players and enimies are placed on the maps
 		//player_x + PLAYER_WIDTH/2 represents the middle of the player, same logic applies for the enemy
 		//either do below for distance or do the super long if statment for ranges
-		if (dist_between_points(player_x,player_y,enemies[i]->pos.x,enemies[i]->pos.y) < PLAYER_WIDTH/2 + ENEMY_HEIGHT/2) //note this only works for SQUARE AND CIRCULAR CHARACTERS
-		{
-			
-			//do collision stuff
+		if ((enemies[i]->pos.y > player_y) && (enemies[i]->pos.y < player_y + PLAYER_HEIGHT)){ 
+			//this is when the collision occurs on the right or left sides (above checks they are on the same level)(then below checks if there is collision)
+			if ((enemies[i]->pos.x < player_x + PLAYER_WIDTH) && (enemies[i]->pos.x > player_x)){ 
+				collision = true;
+			}
+			//some of this if stuff (above and below) might be able to be simplified so that you don't have to add enemy_width and player width
+			else if ((enemies[i]->pos.x + ENEMY_WIDTH > player_x) && (enemies[i]->pos.x + ENEMY_WIDTH < player_x + PLAYER_WIDTH)){
+				collision = true;
+			}
 		}
-		
-		if (check if the edge of one of the box is withing the bound of the locations of x of the other box, boxes being enemyies and players)
+		else if ((enemies[i]->pos.x > player_x) && (enemies[i]->pos.x < player_x + PLAYER_WIDTH)){
+			//this is a collision occuring from the top
+			if ((enemies[i]->pos.y + ENEMY_HEIGHT > player_y) && (enemies[i]->pos.y < player_y)){
+				collision = true;
+			}
+			else if ((enemies[i]->pos.y < player_y + ENEMY_HEIGHT) && (enemies[i]->pos.y > player_y)){
+				collision = true;
+			}
+		}
+		if (collision){
+			break;
+		}//should have only one collision
+	}
+	osMutexRelease(enemy_loc_id);
+	if (collision){
+		// do stuff to handle collision like acquiring the mutexes and then teleporting the player back to the original space
 	}
 }
 
