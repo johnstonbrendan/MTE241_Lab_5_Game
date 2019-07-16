@@ -34,7 +34,7 @@ const int8_t left_offset[NUM_LEVELS][NUM_FLOORS] = {
 const int8_t right_offset[NUM_LEVELS][NUM_FLOORS] = {
 	{0, -1, -1, 0, -1, 2, -1, 1, -1, -1},
 	{4, -1, 1, -1, -1, 3, -1, 0, -1, -1} 
-}
+};
 
 void GUI_Start(void){
 	GLCD_Init();
@@ -76,16 +76,12 @@ void GUI_Task(void *arg){
 void GUI_Level_1(void){
 	drawBackground(1);
 	while(game_state == LEVEL1){
+			animate_player();
 			for (int i = 0; i < NUM_OF_ENEMIES; i++) {
 				animate_enemy(enemies[i]);
 			}
-			animate_player();
 			animate_collisions();
 	}
-	//load background bitmap
-	//load enimies
-	//load main character
-
 }
 
 void animate_enemy(char_info_t* enemy){
@@ -97,7 +93,7 @@ void animate_enemy(char_info_t* enemy){
 	enemy->delta.x = 0;
 	enemy->delta.y = 0; //maybe make all this into a function
 //	GLCD_Bitmap(0,0,30,30,BMP_ENEMY_DATA);
-	GLCD_Bitmap(enemy->pos.x,enemy->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,BMP_ENEMY_DATA);
+	GLCD_Bitmap(enemy->pos.x,enemy->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,BMP_ENEMY_DATA);//this should be replaced with an animate function
 	osMutexRelease(enemy_loc_id);
 
 }
@@ -105,12 +101,24 @@ void animate_enemy(char_info_t* enemy){
 
 void animate_player(void){
 	osMutexAcquire(player_loc_id,osWaitForever);
-	player_info->pos.x = player_info->pos.x + player_info->delta.x;
-	player_info->pos.y = player_info->pos.y + player_info->delta.y;
-	player_info->delta.x = 0;
-	player_info->delta.y = 0; //maybe make all this into a function
-//	GLCD_Bitmap(0,0,30,30,BMP_ENEMY_DATA);
-	GLCD_Bitmap(player_info->pos.x,player_info->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,BMP_ENEMY_DATA);//needs to change for player
+	if (!player_info->teleport){//do the common animation
+		player_info->pos.x = player_info->pos.x + player_info->delta.x;
+		player_info->pos.y = player_info->pos.y + player_info->delta.y;
+		player_info->delta.x = 0;
+		player_info->delta.y = 0; //maybe make all this into a function
+	//	GLCD_Bitmap(0,0,30,30,BMP_ENEMY_DATA);
+		//handle respawning then set teleport back to false
+		//need to make the below thing an animation
+		GLCD_Bitmap(player_info->pos.x,player_info->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,BMP_ENEMY_DATA);//needs to change for player
+	}
+	else
+	{
+		player_info->delta.x = 0;
+		player_info->delta.y = 0;
+		player_info->teleport = false;
+		//need to add in some thing that does not animate and instantly moves the player
+		GLCD_Bitmap(player_info->pos.x,player_info->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,BMP_ENEMY_DATA);//needs to change for player
+	}
 	osMutexRelease(player_loc_id);
 }
 
@@ -123,9 +131,6 @@ void animate_collisions(void){
 	osMutexRelease(player_loc_id);
 	osMutexAcquire(enemy_loc_id,osWaitForever);
 	for (int i = 0; i < NUM_OF_ENEMIES; i++){
-		//need to adjust the y check depending on how the players and enimies are placed on the maps
-		//player_x + PLAYER_WIDTH/2 represents the middle of the player, same logic applies for the enemy
-		//either do below for distance or do the super long if statment for ranges
 		if ((enemies[i]->pos.y > player_y) && (enemies[i]->pos.y < player_y + PLAYER_HEIGHT)){ 
 			//this is when the collision occurs on the right or left sides (above checks they are on the same level)(then below checks if there is collision)
 			if ((enemies[i]->pos.x < player_x + PLAYER_WIDTH) && (enemies[i]->pos.x > player_x)){ 
@@ -151,15 +156,14 @@ void animate_collisions(void){
 	}
 	osMutexRelease(enemy_loc_id);
 	if (collision){
+		osMutexAcquire(player_loc_id, osWaitForever);
+		player_info->teleport = true;
+		player_info->pos.x = PLAYER_INIT_X;
+		player_info->pos.y = PLAYER_INIT_Y;
+		osMutexRelease(player_loc_id);
 		// do stuff to handle collision like acquiring the mutexes and then teleporting the player back to the original space
 	}
 }
-
-uint16_t dist_between_points(uint16_t player_x, uint16_t player_y, uint16_t enemy_x, uint16_t enemy_y){
-	
-	//use the sqrt and power functions here
-}
-
 
 
 void GUI_Level_Menu(void){

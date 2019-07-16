@@ -7,9 +7,7 @@
 #include <stdbool.h>
 #include "bitmaps.h"
 
-#define LADDER_HEIGHT 30
-#define SCREEN_HEIGHT 240
-#define SCREEN_WIDTH 320
+
 
 char_info_t* player_info;
 osMutexId_t	player_loc_id;

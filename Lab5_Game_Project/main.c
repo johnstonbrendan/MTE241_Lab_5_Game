@@ -20,7 +20,7 @@ void init(void){
 	GUI_Start();
 	setup_INT0();
 	Joy_init();
-	player_init(150,70);//start with the player at 0,0
+	player_init(PLAYER_INIT_X,PLAYER_INIT_Y);//start with the player at 0,0
 }
 
 int main(void){

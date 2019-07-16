@@ -1,5 +1,5 @@
 #ifndef _BITMAPS_H
-#define 
+#define _BITMAPS_H
 
 #define SC_WIDTH 320
 #define SC_HEIGHT 240
