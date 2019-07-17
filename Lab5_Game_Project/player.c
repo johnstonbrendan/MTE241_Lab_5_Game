@@ -8,8 +8,6 @@
 #include "bitmaps.h"
 #include "GUI.h"
 
-#define LADDER_HEIGHT 30
-
 char_info_t* player_info;
 osMutexId_t	player_loc_id;
 
