@@ -11,6 +11,8 @@
 #include "player.h"
 #include <math.h>
 #include "Font_6x8_h.h"
+#include <stdio.h>
+
 uint8_t sel_lev;
 osMutexId_t game_state_id;
 uint8_t game_state;
@@ -100,6 +102,7 @@ void animate_enemy(char_info_t* enemy){
 void animate_player(void){
 	osMutexAcquire(player_loc_id,osWaitForever);
 	if (!player_info->teleport){//do the common animation
+		if(abs(player_info->delta.x) > 0) togglePlayerBitmap();
 		player_info->pos.x = player_info->pos.x + player_info->delta.x;
 		player_info->pos.y = player_info->pos.y + player_info->delta.y;
 		player_info->delta.x = 0;
