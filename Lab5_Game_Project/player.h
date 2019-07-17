@@ -7,8 +7,8 @@
 #define LADDER_HEIGHT 30
 #define SCREEN_HEIGHT 240
 #define SCREEN_WIDTH 320
-#define PLAYER_INIT_X 150
-#define PLAYER_INIT_Y 70
+#define PLAYER_INIT_X 160
+#define PLAYER_INIT_Y 150
 
 void player_init(uint16_t initX, uint16_t initY);
 

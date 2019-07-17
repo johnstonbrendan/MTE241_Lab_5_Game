@@ -10,19 +10,7 @@
 #include "bitmaps.h"
 #include "player.h"
 #include <math.h>
-
-
-// Level Definitions
-#define NUM_LEVELS 2
-#define MAINMENU 0
-#define LEVEL1 1
-#define LEVEL2 2
-#define LEVEL1_COMPLETE 3
-#define LEVEL2_COMPLETE 4
-
-
-#define NUM_FLOORS 10
-
+#include "Font_6x8_h.h"
 uint8_t sel_lev;
 osMutexId_t game_state_id;
 uint8_t game_state;
@@ -50,6 +38,8 @@ void GUI_Start(void){
 	game_state_id = osMutexNew(NULL);
 	game_state = MAINMENU;//no need mutex as the threads have not started yet
 	game_state = LEVEL1;//THIS IS ONLY HERE FOR TESTING
+	
+	
 }
 
 
@@ -70,7 +60,8 @@ void GUI_Task(void *arg){
 		}	
 		else if (game_state == LEVEL1_COMPLETE){
 			GLCD_Clear(Green);
-			GLCD_DisplayString(20,20,0,"Congrats yo yo you did it!!!!! nOW TRY LEVEL 2 :)");
+			GLCD_DisplayString(20,20,1,"Congrats yo yo you did it!!!!! nOW TRY LEVEL 2 :)");
+			break;
 		}
 		else if (game_state == LEVEL2_COMPLETE){
 			GLCD_Clear(Red);
@@ -156,7 +147,7 @@ void animate_collisions(void){
 			if ((enemies[i]->pos.y + ENEMY_HEIGHT > player_y) && (enemies[i]->pos.y < player_y)){
 				collision = true;
 			}
-			else if ((enemies[i]->pos.y < player_y + ENEMY_HEIGHT) && (enemies[i]->pos.y > player_y)){
+			else if ((enemies[i]->pos.y < player_y + PLAYER_HEIGHT) && (enemies[i]->pos.y > player_y)){
 				collision = true;
 			}
 		}
@@ -256,9 +247,9 @@ bool isFloor(uint8_t level, uint16_t x, uint16_t y) {
 	
 	if(left_offset[level][floor] < 0) return false;
 	
-	uint8_t blocksAwayFromLeftWall = x/BMP_GRASSBLOCK_WIDTH;
-	if(left_offset[level][floor] <= blocksAwayFromLeftWall 
-		&& (SC_WIDTH/BMP_GRASSBLOCK_WIDTH - right_offset[level][floor]) >= blocksAwayFromLeftWall) {
+	uint8_t blocksAwayFromLeftWall = (x + BMP_GRASSBLOCK_WIDTH/2)/BMP_GRASSBLOCK_WIDTH;
+	if(left_offset[level][floor] <= blocksAwayFromLeftWall - 1
+		&& ((SC_WIDTH/BMP_GRASSBLOCK_WIDTH - right_offset[level][floor]) >= blocksAwayFromLeftWall)) {
 			return true;
 	}
 

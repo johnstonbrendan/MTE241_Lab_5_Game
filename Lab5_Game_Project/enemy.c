@@ -66,7 +66,8 @@ char_pos_t enemy_path(uint8_t enemy){
 	case 1:
 		temp_pos.x = enemy_time/100+30;
 		//temp_pos.y = (uint32_t)tan(enemy_time);
-		temp_pos.y = 20*sin(temp_pos.x)+100;
+		//temp_pos.y = 20*sin(temp_pos.x)+100;
+		temp_pos.y = 100;
 		break;
 	case 2:
 		temp_pos.x = (enemy_time/1000)+200;

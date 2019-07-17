@@ -2,6 +2,18 @@
 
 #ifndef _GUI_H
 #define _GUI_H
+
+// Level Definitions
+#define NUM_LEVELS 2
+#define MAINMENU 0
+#define LEVEL1 1
+#define LEVEL2 2
+#define LEVEL1_COMPLETE 3
+#define LEVEL2_COMPLETE 4
+
+
+#define NUM_FLOORS 10
+
 void GUI_Start(void);
 
 void GUI_Task(void * arg);
