@@ -49,7 +49,7 @@ void GUI_Task(void *arg){
 			GUI_Level_Menu();
 		}
 		else if (game_state == LEVEL1){
-			GLCD_Clear(Blue);
+			GLCD_Clear(Blue);//do blue for background
 			GUI_Level_1();
 			GLCD_DisplayString(20,20,0,"LEVEL 1 PLACEHOLDER");
 			//do stuff for level 1 GUI
@@ -65,7 +65,7 @@ void GUI_Task(void *arg){
 		}
 		else if (game_state == LEVEL2_COMPLETE){
 			GLCD_Clear(Red);
-			GLCD_DisplayString(20,20,0,"Congrats yoU COMPLETED LEVEL 2");
+			GLCD_DisplayString(20,20,1,"Congrats yoU COMPLETED LEVEL 2");
 		}
 	}
 }
@@ -92,9 +92,8 @@ void animate_enemy(char_info_t* enemy){
 	enemy->delta.x = 0;
 	enemy->delta.y = 0; //maybe make all this into a function
 //	GLCD_Bitmap(0,0,30,30,BMP_ENEMY_DATA);
-	GLCD_Bitmap(enemy->pos.x,enemy->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,BMP_ENEMY_DATA);//this should be replaced with an animate function
+	GLCD_Bitmap(enemy->pos.x,enemy->pos.y,BMP_ENEMY_WIDTH,BMP_ENEMY_HEIGHT,BMP_ENEMY_DATA);//this should be replaced with an animate function
 	osMutexRelease(enemy_loc_id);
-
 }
 
 
@@ -108,7 +107,7 @@ void animate_player(void){
 	//	GLCD_Bitmap(0,0,30,30,BMP_ENEMY_DATA);
 		//handle respawning then set teleport back to false
 		//need to make the below thing an animation
-		GLCD_Bitmap(player_info->pos.x,player_info->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,BMP_ENEMY_DATA);//needs to change for player
+		GLCD_Bitmap(player_info->pos.x,player_info->pos.y,BMP_PLAYER_WIDTH,BMP_PLAYER_HEIGHT,bmp_player_data);//needs to change for player
 	}
 	else
 	{
@@ -118,7 +117,7 @@ void animate_player(void){
 		player_info->pos.x = PLAYER_INIT_X;
 		player_info->pos.y = PLAYER_INIT_Y;
 		//need to add in some thing that does not animate and instantly moves the player
-		GLCD_Bitmap(player_info->pos.x,player_info->pos.y,ENEMY_WIDTH,ENEMY_HEIGHT,BMP_ENEMY_DATA);//needs to change for player
+		GLCD_Bitmap(player_info->pos.x,player_info->pos.y,BMP_PLAYER_WIDTH,BMP_PLAYER_HEIGHT,BMP_ENEMY_DATA);//needs to change for player
 	}
 	osMutexRelease(player_loc_id);
 }

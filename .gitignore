@@ -3,5 +3,5 @@ include/
 
 Lab5_Game_Project/Objects
 Lab5_Game_Project/Listings
-Lab5_Game_Project/RTE
 Lab5_Game_Project/DebugConfig
+Lab5_Game_Project/*.uvguix.*
