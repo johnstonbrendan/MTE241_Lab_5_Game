@@ -12,6 +12,7 @@
 #include "enemy.h"
 #include "bitmaps.h"
 #include "player.h"
+#include <stdio.h>
 
 osThreadId_t GUI_Thread, Pot_Thread, Joy_Thread, Enemy_Thread, Player_Thread; //... add more!
 
@@ -25,6 +26,7 @@ void init(void){
 
 int main(void){
 	init();
+	printf("Starting program...\n");
 	osKernelInitialize();
 	GUI_Thread = osThreadNew(GUI_Task,NULL,NULL);
 	Pot_Thread = osThreadNew(Pot_Task,NULL,NULL);
