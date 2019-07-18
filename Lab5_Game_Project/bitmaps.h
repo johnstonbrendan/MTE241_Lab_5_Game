@@ -2,8 +2,8 @@
 #define _BITMAPS_H
 #include <stdint.h>
 
-#define END_X 0
-#define END_Y 0
+#define END_X 1000
+#define END_Y 1000
 
 #define SC_WIDTH 320
 #define SC_HEIGHT 240
@@ -12,7 +12,10 @@
 #define BMP_GRASSBLOCK_WIDTH (20)
 #define BMP_GRASSBLOCK_HEIGHT (25)
 #define BMP_GRASSBLOCK_DATA ((unsigned char*) grassblock)
-
+	
+#define BMP_PORTAL_WIDTH (15)
+#define BMP_PORTAL_HEIGHT (15)
+#define BMP_PORTAL_DATA ((unsigned char*) NULL)
 
 #define ENEMY_WIDTH (20)
 #define ENEMY_HEIGHT (20)
@@ -32,6 +35,9 @@ extern const unsigned char bmp_enemy_data[23*23*3 + 1];
 extern unsigned char bmp_player_data[30*30*2 + 1];
 
 void togglePlayerBitmap();
+
+
+
 
 
 //extern const unsigned char enemy_empty_map[10*10*2];

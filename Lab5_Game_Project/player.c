@@ -8,18 +8,8 @@
 #include "bitmaps.h"
 #include "GUI.h"
 
-#define LADDER_HEIGHT 30
-
 char_info_t* player_info;
 osMutexId_t	player_loc_id;
-
-bool ladder_avaliable(){
-	bool temp_avaliable = false;
-	osMutexAcquire(player_loc_id,osWaitForever);
-	//is ladder there???
-	osMutexRelease(player_loc_id);
-	return temp_avaliable;
-}
 
 void player_init(uint16_t initX, uint16_t initY) { 
     player_info = malloc(sizeof(char_info_t));
@@ -46,27 +36,23 @@ void player_task(void* args){
 				horizontalMove = joy_in->right - joy_in->left;
 				joy_in->right = 0;
 				joy_in->left = 0;
-				joy_in->up = 0x1;
+				joy_in->up = 0;
 				joy_in->down = 0; //maybe make this a function
 		osMutexRelease(joy_val_id);
-		if(button_pushed) {
-			button_pushed = false;
-			if (ladder_avaliable()) verticalMove = LADDER_HEIGHT; // call ladder fnc with current position
-		}
-   
 			int16_t *intended_x = malloc(sizeof(int16_t));
 			int16_t *intended_y = malloc(sizeof(int16_t));
 		osMutexAcquire(player_loc_id, osWaitForever); 
-				*intended_x = player_info->pos.x + horizontalMove;
-				*intended_y = player_info->pos.y + verticalMove;
-		
-				legalize(intended_x, intended_y);
-		
+			*intended_x = player_info->pos.x + horizontalMove;
+			*intended_y = player_info->pos.y + verticalMove;
+	
+			legalize(intended_x, intended_y);
+			if (horizontalMove && !player_info->teleport)
+			{
 				player_info->delta.x = *intended_x - player_info->pos.x;
-				
-				if(verticalMove) {
-						player_info->delta.y = *intended_y - player_info->pos.y;
-				}
+			}
+			if(verticalMove && !player_info->teleport) {
+					player_info->delta.y = *intended_y - player_info->pos.y;
+			}
 		osMutexRelease(player_loc_id);
 		free(intended_x);
 		free(intended_y);
@@ -98,13 +84,5 @@ void legalize(int16_t* x, int16_t* y) {//may be able to just put this into the l
 		// we can even add falling like this? maybe?
 	}
 	
-	*x = temp_x;
-
-//    char_pos_t *enemyInPath = enemy_in_path(player_info->pos.x, *x, *y);
-//    if(!(enemyInPath -> x == enemyInPath->y == -1)) { 
-//        *x = enemyInPath->x;
-//        *y = enemyInPath->y;
-//    }
-
-        
+	*x = temp_x;        
 }

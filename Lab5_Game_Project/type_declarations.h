@@ -25,6 +25,12 @@ typedef struct {
 	bool teleport;
 } char_info_t;
 
+typedef struct{// p1 always at lower y value
+	int16_t p1x;
+	int16_t p1y;
+	int16_t p2x;
+	int16_t p2y;
+}portal_pair_t;
 
 extern uint8_t game_state;
 extern joy_count_t* joy_in;
