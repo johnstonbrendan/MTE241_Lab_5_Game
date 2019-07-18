@@ -228,10 +228,10 @@ void drawBackground(uint8_t level){
 	uint16_t startPixel, endPixel = 0;
 	for(uint8_t i = 0; i < NUM_FLOORS; i++) {
 		if(left_offset[level][i] >= 0 && right_offset[level][i] >= 0) {
-			startPixel = left_offset[level][i]*BMP_GRASSBLOCK_WIDTH;
-			endPixel = SC_WIDTH - right_offset[level][i]*BMP_GRASSBLOCK_WIDTH;
+			startPixel = right_offset[level][i]*BMP_GRASSBLOCK_WIDTH;
+			endPixel = SC_WIDTH - left_offset[level][i]*BMP_GRASSBLOCK_WIDTH;
 			for(uint16_t j = startPixel; j < endPixel; j+=BMP_GRASSBLOCK_WIDTH){
-				GLCD_Bitmap(j, i*BMP_GRASSBLOCK_HEIGHT, BMP_GRASSBLOCK_WIDTH, BMP_GRASSBLOCK_HEIGHT, BMP_GRASSBLOCK_DATA);
+				GLCD_Bitmap(j, i*(BMP_GRASSBLOCK_HEIGHT), BMP_GRASSBLOCK_WIDTH, BMP_GRASSBLOCK_HEIGHT, BMP_GRASSBLOCK_DATA);
 			}
 		}
 	}
@@ -249,11 +249,19 @@ bool isFloor(uint8_t level, uint16_t x, uint16_t y) {
 	
 	if(left_offset[level][floor] < 0) return false;
 	
-	uint8_t blocksAwayFromLeftWall = (x + BMP_GRASSBLOCK_WIDTH/2)/BMP_GRASSBLOCK_WIDTH;
-	if(left_offset[level][floor] <= blocksAwayFromLeftWall - 1
-		&& ((SC_WIDTH/BMP_GRASSBLOCK_WIDTH - right_offset[level][floor]) >= blocksAwayFromLeftWall)) {
+	uint8_t blocksAwayFromRightWall = x/BMP_GRASSBLOCK_WIDTH + 1;
+	
+	if(blocksAwayFromRightWall > right_offset[level][floor]) {
+		uint8_t blocksAwayFromLeftWall = SC_WIDTH/BMP_GRASSBLOCK_WIDTH - blocksAwayFromRightWall;
+		if(blocksAwayFromLeftWall > left_offset[level][floor]) {
 			return true;
 	}
+	}
+	// uint8_t blocksAwayFromLeftWall = (x + BMP_GRASSBLOCK_WIDTH/2)/BMP_GRASSBLOCK_WIDTH;
+	// if(left_offset[level][floor] <= blocksAwayFromLeftWall - 1
+	// 	&& ((SC_WIDTH/BMP_GRASSBLOCK_WIDTH - right_offset[level][floor]) >= blocksAwayFromLeftWall)) {
+	// 		return true;
+	// }
 
-	else return false;	
+	return false;	
 }

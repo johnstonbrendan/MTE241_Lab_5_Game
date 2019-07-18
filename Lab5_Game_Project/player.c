@@ -92,9 +92,9 @@ void legalize(int16_t* x, int16_t* y) {//may be able to just put this into the l
 
 	int16_t temp_x = *x;
 	int16_t temp_y = *y;
-	while(!isFloor(game_state, temp_x, temp_y)){
+	while(!isFloor(game_state, temp_x, temp_y) || !isFloor(game_state, temp_x, temp_y)){
 		// bring back x one grassblock width towards player
-		temp_x--;// = temp_x - (temp_x - player_info->pos.x)/abs(temp_x - player_info->pos.x); // * BMP_GRASSBLOCK_W?
+		temp_x = temp_x - (temp_x - player_info->pos.x)/abs(temp_x - player_info->pos.x); // * BMP_GRASSBLOCK_W?
 		// we can even add falling like this? maybe?
 	}
 	
