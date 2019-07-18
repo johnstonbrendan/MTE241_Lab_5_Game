@@ -107,10 +107,10 @@ void animate_player(void){
 		player_info->pos.y = player_info->pos.y + player_info->delta.y;
 		player_info->delta.x = 0;
 		player_info->delta.y = 0; //maybe make all this into a function
-	//	GLCD_Bitmap(0,0,30,30,BMP_ENEMY_DATA);
 		//handle respawning then set teleport back to false
 		//need to make the below thing an animation
-		GLCD_Bitmap(player_info->pos.x,player_info->pos.y,BMP_PLAYER_WIDTH,BMP_PLAYER_HEIGHT,bmp_player_data);//needs to change for player
+		GLCD_Bitmap(player_info->pos.x,player_info->pos.y,BMP_PLAYER_WIDTH,BMP_PLAYER_HEIGHT-BMP_COLOR_BORDER,&bmp_player_data[3*2*BMP_PLAYER_WIDTH]);// shave off top of players bitmap
+
 	}
 	else
 	{
@@ -120,7 +120,7 @@ void animate_player(void){
 		player_info->pos.x = PLAYER_INIT_X;
 		player_info->pos.y = PLAYER_INIT_Y;
 		//need to add in some thing that does not animate and instantly moves the player
-		GLCD_Bitmap(player_info->pos.x,player_info->pos.y,BMP_PLAYER_WIDTH,BMP_PLAYER_HEIGHT,BMP_ENEMY_DATA);//needs to change for player
+		GLCD_Bitmap(player_info->pos.x,player_info->pos.y,BMP_PLAYER_WIDTH,BMP_PLAYER_HEIGHT-BMP_COLOR_BORDER,&bmp_player_data[3*2*BMP_PLAYER_WIDTH]);// shave off top of players bitmap
 	}
 	osMutexRelease(player_loc_id);
 }
