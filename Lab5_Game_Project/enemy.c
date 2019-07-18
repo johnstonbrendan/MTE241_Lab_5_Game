@@ -50,9 +50,6 @@ void enemy_task(void *arg){
 	}
 }
 
-char_pos_t *enemy_in_path(uint32_t start_x, uint32_t end_x, uint32_t y){
-
-}
 
 char_pos_t enemy_path(uint8_t enemy){
 	char_pos_t temp_pos;
@@ -71,7 +68,7 @@ char_pos_t enemy_path(uint8_t enemy){
 		break;
 	case 2:
 		temp_pos.x = (enemy_time/1000)+200;
-		temp_pos.y = (enemy_time/100)+100;
+		temp_pos.y = (enemy_time/50)+150;
 		break;
 	default:
 		return temp_pos;
