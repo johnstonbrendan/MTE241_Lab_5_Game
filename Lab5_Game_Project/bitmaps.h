@@ -2,8 +2,8 @@
 #define _BITMAPS_H
 #include <stdint.h>
 
-#define END_X 150
-#define END_Y 150
+#define END_X 0
+#define END_Y 0
 
 #define SC_WIDTH 320
 #define SC_HEIGHT 240
