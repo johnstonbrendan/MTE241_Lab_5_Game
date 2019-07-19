@@ -78,16 +78,17 @@ void GUI_Level_1(void){
 	drawPortals(1);
 	while(game_state == LEVEL1){
 			animate_player();
-			for (int i = 0; i < NUM_OF_ENEMIES; i++) {
-				animate_enemy(enemies[i]);
+			for (int i = 0; i < NUM_OF_ENEMIES - 1; i++) {
+				animate_enemy(enemies[i], false);
 			}
+			animate_enemy(enemies[NUM_OF_ENEMIES - 1],true);//this will be the enemy you need to catch
 			animate_portals();
 			animate_collisions();//collision will handle both hitting an enemy and getting to the end goal
 			//end point stored in bitmaps.h
 	}
 }
 
-void animate_enemy(char_info_t* enemy){
+void animate_enemy(char_info_t* enemy, bool to_catch){
 	osMutexAcquire(enemy_loc_id,osWaitForever);
 	//GLCD_Bitmap(enemy.pos->x, enemy.pos->y,ENEMY_WIDTH,ENEMY_HEIGHT,NULL);
 	//GLCD_Bitmap(100,100,ENEMY_WIDTH,ENEMY_HEIGHT,BMP_ENEMY_DATA);
@@ -96,7 +97,12 @@ void animate_enemy(char_info_t* enemy){
 	enemy->delta.x = 0;
 	enemy->delta.y = 0; //maybe make all this into a function
 //	GLCD_Bitmap(0,0,30,30,BMP_ENEMY_DATA);
-	GLCD_Bitmap(enemy->pos.x,enemy->pos.y,BMP_ENEMY_WIDTH,BMP_ENEMY_HEIGHT,BMP_ENEMY_DATA);//this should be replaced with an animate function
+	if (!to_catch){
+		GLCD_Bitmap(enemy->pos.x,enemy->pos.y,BMP_ENEMY_WIDTH,BMP_ENEMY_HEIGHT,BMP_ENEMY_DATA);//this should be replaced with an animate function
+	}
+	else{
+		GLCD_Bitmap(enemy->pos.x,enemy->pos.y,BMP_ENEMY_WIDTH,BMP_ENEMY_HEIGHT,BMP_ENEMY_DATA);//this needs to be the golden enemy bitmap
+	}
 	osMutexRelease(enemy_loc_id);
 }
 
@@ -124,7 +130,7 @@ void animate_player(void){
 		//over the current player position draw a background color box the same size of the player (dynamilcally create at runtime)
 		//then reload all the portals
 		osMutexAcquire(game_state_id,osWaitForever);
-		(game_state == LEVEL1) ? drawPortals(1) : drawPortals(2);
+		(game_state == LEVEL1) ? drawPortals(1) : drawPortals(2);//keep in mind that this means when you hit an enemy portals will be drawn too
 		osMutexRelease(game_state_id);
 		//do some animating to remove the stuff at the previous position which right now is player_info->pos.x and y
 		player_info->pos.x = player_info->pos.x + player_info->delta.x;
@@ -184,7 +190,7 @@ void animate_portals(void){
 
 void animate_collisions(void){
 	uint16_t player_x, player_y = 0;
-	bool collision = false;
+	bool collision,golden_enemy = false;
 	osMutexAcquire(player_loc_id,osWaitForever);
 	player_x = player_info->pos.x;
 	player_y = player_info->pos.y;
@@ -193,22 +199,25 @@ void animate_collisions(void){
 	for (int i = 0; i < NUM_OF_ENEMIES; i++){
 		collision = check_collision(player_x, player_y, enemies[i]->pos.x, enemies[i]->pos.y, ENEMY_HEIGHT, ENEMY_WIDTH);
 		if (collision){
+			if(i == NUM_OF_ENEMIES - 1){
+				golden_enemy = true;
+			}
 			break;
 		}//should have only one collision
 	}
 	osMutexRelease(enemy_loc_id);
-	if (collision){
+	if (golden_enemy){//this may need to be similiar to collision above instead of just the x,y
+		osMutexAcquire(game_state_id,osWaitForever);
+		game_state = LEVEL1_COMPLETE;
+		osMutexRelease(game_state_id);
+	}
+	if (collision && !golden_enemy){
 		osMutexAcquire(player_loc_id, osWaitForever);
 		player_info->teleport = true;
 		player_info->delta.x = PLAYER_INIT_X - player_info->pos.x;
 		player_info->delta.y = PLAYER_INIT_Y - player_info->pos.y;
 		osMutexRelease(player_loc_id);
 		// do stuff to handle collision like acquiring the mutexes and then teleporting the player back to the original space
-	}
-	if ((player_x == END_X) && (player_y == END_Y)){//this may need to be similiar to collision above instead of just the x,y
-		osMutexAcquire(game_state_id,osWaitForever);
-		game_state = LEVEL1_COMPLETE;
-		osMutexRelease(game_state_id);
 	}
 }
 
