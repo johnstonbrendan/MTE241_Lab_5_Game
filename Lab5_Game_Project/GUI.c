@@ -35,6 +35,8 @@ void GUI_Start(void){
 	//GLCD_Bitmap(0,0,320,240,background_map);
 	GLCD_Clear(Blue);
 	//no need mutex here because only the GUI tasks will access it
+
+	initializeBackgroundMap(30, 30, 0x001F);
 	sel_lev = 1;
 	GLCD_DisplayString(14, 18, 0, "  Level 1");
 	GLCD_DisplayString(18, 18, 0, "  Level 2");
@@ -76,6 +78,7 @@ void GUI_Task(void *arg){
 void GUI_Level_1(void){
 	drawBackground(1);//include end goal in the background
 	drawPortals(1);
+
 	while(game_state == LEVEL1){
 			animate_player();
 			for (int i = 0; i < NUM_OF_ENEMIES; i++) {

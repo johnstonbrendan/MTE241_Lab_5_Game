@@ -29,12 +29,15 @@
 #define BMP_PLAYER_HEIGHT (PLAYER_HEIGHT + BMP_COLOR_BORDER)
 #define BMP_PLAYER_WIDTH (PLAYER_WIDTH + BMP_COLOR_BORDER)
 
+extern unsigned char *backgroundBitmap; 
 
 extern const unsigned char grassblock[20 * 25 * 2 + 1];
 extern const unsigned char bmp_enemy_data[23*23*3 + 1];
 extern unsigned char bmp_player_data[30*30*2 + 1];
 
+
 void togglePlayerBitmap();
+void initializeBackgroundMap(uint8_t w, uint8_t h, uint16_t colour);
 
 
 

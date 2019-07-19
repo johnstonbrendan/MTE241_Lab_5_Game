@@ -4,6 +4,8 @@
 #define ANIM_COUNT_RESET_VAL 10
 uint8_t animCount = 1;
 
+unsigned char *backgroundBitmap = NULL;
+
 const unsigned char grassblock[20 * 25 * 2 + 1] =
 ("\351\062\011\063IC\011;\310\062(CHCHKGK(C\310:\310:(C\010;\307:(CHC(C(C(C\352C\013"
  "DkT*L\351CiT\210\\\211\\\212\\KT\353C\312CkT*L\011DiT\211\\\211\\\212TjT\313"
@@ -155,4 +157,17 @@ unsigned char bmp_player_data[30 * 30 * 2 + 1] =
      }
 		 animCount = ANIM_COUNT_RESET_VAL;
 	 }
+ }
+
+ void initializeBackgroundMap(uint8_t w, uint8_t h, uint16_t colour) {
+     if(backgroundBitmap == NULL){
+         backgroundBitmap = malloc(w*h*2);
+     }
+
+     for(int i = 0; i < w*h*2; i++) {
+        if(i%2 == 0)
+            backgroundBitmap[i] = colour & 0x00FF;
+        else 
+            backgroundBitmap[i] = colour >> 8;
+     }
  }
