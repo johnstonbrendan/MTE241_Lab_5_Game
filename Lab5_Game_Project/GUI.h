@@ -62,7 +62,9 @@ bool isFloor(uint8_t level, uint16_t x, uint16_t y);
 
 void drawPortals(uint8_t level);
 
-bool check_collision(uint16_t player_x, uint16_t player_y, uint16_t object_x, uint16_t object_y, uint8_t object_h, uint8_t object_w);
+bool check_collision(uint16_t object_1_x, uint16_t object_1_y, uint16_t object_2_x, uint16_t object_2_y, 
+						uint8_t object_1_h, uint8_t object_1_w, uint8_t object_2_h, uint8_t object_2_w);
 
+void redraw_all(void);
 
 #endif

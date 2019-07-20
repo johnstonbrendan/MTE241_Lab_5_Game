@@ -77,12 +77,12 @@ void GUI_Level_1(void){
 	drawBackground(1);//include end goal in the background
 	drawPortals(1);
 	while(game_state == LEVEL1){
+			animate_portals();
 			animate_player();
 			for (int i = 0; i < NUM_OF_ENEMIES - 1; i++) {
 				animate_enemy(enemies[i], false);
 			}
 			animate_enemy(enemies[NUM_OF_ENEMIES - 1],true);//this will be the enemy you need to catch
-			animate_portals();
 			animate_collisions();//collision will handle both hitting an enemy and getting to the end goal
 			//end point stored in bitmaps.h
 	}
@@ -122,6 +122,7 @@ void animate_player(void){
 	}
 	else
 	{
+		redraw_all();
 		uint16_t intended_x, intended_y = 0;
 		intended_x = player_info->pos.x + player_info->delta.x;
 		intended_y = player_info->pos.y + player_info->delta.y;
@@ -144,47 +145,73 @@ void animate_player(void){
 
 
 void animate_portals(void){
-	if (button_pushed){
-		button_pushed = false;
-		uint16_t player_x, player_y = 0;
-		osMutexAcquire(game_state_id,osWaitForever);
-		uint8_t num_of_portals = (game_state == LEVEL1) ? NUM_L1_PORTALS : NUM_L2_PORTALS;
-		osMutexRelease(game_state_id);
-		uint8_t portal_pair_col = 100;//this is means invalid for now//this will store which portal pair had the collision
-		bool collision_p1, collision_p2 = false;
-		osMutexAcquire(player_loc_id,osWaitForever);
-		player_x = player_info->pos.x;
-		player_y = player_info->pos.y;
-		osMutexRelease(player_loc_id);
-		for (int i = 0; i < num_of_portals/2; i++){
-			collision_p1 = check_collision(player_x, player_y, portal_pairs[i].p1x,portal_pairs[i].p1y, BMP_PORTAL_HEIGHT, BMP_PORTAL_WIDTH);
-			if (collision_p1){
-				portal_pair_col = i;
-				break;
-			}
-			collision_p2 = check_collision(player_x, player_y, portal_pairs[i].p2x,portal_pairs[i].p2y, BMP_PORTAL_HEIGHT, BMP_PORTAL_WIDTH);
-			if (collision_p2){
-				portal_pair_col = i;
-				break;
+	uint16_t player_x, player_y = 0;
+	bool player_moved, enemy_moved = false;
+	osMutexAcquire(game_state_id,osWaitForever);
+	uint8_t num_of_portals = (game_state == LEVEL1) ? NUM_L1_PORTALS : NUM_L2_PORTALS;
+	osMutexRelease(game_state_id);
+	uint8_t portal_pair_col = 100;//this is means invalid for now//this will store which portal pair had the collision
+	bool player_col_p1, player_col_p2 = false, enemy_col = false;
+	osMutexAcquire(player_loc_id,osWaitForever);
+	player_x = player_info->pos.x;
+	player_y = player_info->pos.y;
+	player_moved = (bool) player_info->delta.x;//if the player
+	for (int j = 0; j < NUM_OF_ENEMIES; j++){
+		enemy_moved = (bool) (enemies[j]->delta.x + enemies[j]->delta.y);
+		if (enemy_moved){
+			GLCD_DisplayString(0,0,1,"Enemy Moved            ");
+			break;
+		}
+	}
+	osMutexRelease(player_loc_id);
+	for (int i = 0; i < num_of_portals/2; i++){
+		player_col_p1 = check_collision(player_x, player_y, portal_pairs[i].p1x,portal_pairs[i].p1y,
+						PLAYER_HEIGHT, PLAYER_WIDTH, BMP_PORTAL_HEIGHT, BMP_PORTAL_WIDTH);
+		if (player_col_p1){
+			portal_pair_col = i;
+			GLCD_DisplayString(0,0,1,"Hit portal p1        ");
+			break;
+		}
+		player_col_p2 = check_collision(player_x, player_y, portal_pairs[i].p2x,portal_pairs[i].p2y,
+									PLAYER_HEIGHT, PLAYER_WIDTH, BMP_PORTAL_HEIGHT, BMP_PORTAL_WIDTH);
+		if (player_col_p2){
+			portal_pair_col = i;
+			GLCD_DisplayString(0,0,1,"Hit portal p2          ");
+			break;
+		}
+		osMutexAcquire(enemy_loc_id,osWaitForever);
+		for (int j = 0; j < NUM_OF_ENEMIES; j++){
+			enemy_col = check_collision(enemies[j]->pos.x, enemies[j]->pos.y, 
+										portal_pairs[i].p1x,portal_pairs[i].p1y, 
+										ENEMY_HEIGHT, ENEMY_WIDTH, BMP_PORTAL_HEIGHT, BMP_PORTAL_WIDTH);
+			if (enemy_col){
+				GLCD_DisplayString(0,0,1,"Enemy Collision               ");
+				break;//do enemy and portal collision
 			}
 		}
-		if (collision_p1 || collision_p2){
+		osMutexRelease(enemy_loc_id);
+	}
+	if (player_col_p1 || player_col_p2){// the user is colliding with a portal
+		if (button_pushed){//if the user wants to teleport
+			button_pushed = false;
 			osMutexAcquire(player_loc_id,osWaitForever);
 			player_info->teleport = true;
-			if (collision_p1){
+			if (player_col_p1){
 				player_info->delta.x = portal_pairs[portal_pair_col].p2x - player_info->pos.x;
 				player_info->delta.y = portal_pairs[portal_pair_col].p2y - player_info->pos.y;
-//				player_info->pos.x = portal_pairs[portal_pair_col].p2x;
-//				player_info->pos.y = portal_pairs[portal_pair_col].p2y;
 			}
-			else if (collision_p2){
+			else if(player_col_p2){
 				player_info->delta.x = portal_pairs[portal_pair_col].p1x - player_info -> pos.x;
 				player_info->delta.y = portal_pairs[portal_pair_col].p1y - player_info -> pos.y;
-//				player_info->pos.x = portal_pairs[portal_pair_col].p1x;
-//				player_info->pos.y = portal_pairs[portal_pair_col].p1y;
 			}
 			osMutexRelease(player_loc_id);
+		}else if (player_moved){//player and portal are overlapping and need to redraw a part of the portal and the player has moved
+			(game_state == LEVEL1) ? drawPortals(1) : drawPortals(2);
 		}
+	}
+	if (enemy_col && enemy_moved){
+			(game_state == LEVEL1) ? drawPortals(1) : drawPortals(2);
+		GLCD_DisplayString(1,0,1,"Redraw Portals      ");
 	}
 }
 
@@ -197,7 +224,8 @@ void animate_collisions(void){
 	osMutexRelease(player_loc_id);
 	osMutexAcquire(enemy_loc_id,osWaitForever);
 	for (int i = 0; i < NUM_OF_ENEMIES; i++){
-		collision = check_collision(player_x, player_y, enemies[i]->pos.x, enemies[i]->pos.y, ENEMY_HEIGHT, ENEMY_WIDTH);
+		collision = check_collision(player_x, player_y, enemies[i]->pos.x, enemies[i]->pos.y,
+							PLAYER_HEIGHT,PLAYER_WIDTH, ENEMY_HEIGHT, ENEMY_WIDTH);
 		if (collision){
 			if(i == NUM_OF_ENEMIES - 1){
 				golden_enemy = true;
@@ -221,24 +249,25 @@ void animate_collisions(void){
 	}
 }
 
-bool check_collision(uint16_t player_x, uint16_t player_y, uint16_t object_x, uint16_t object_y, uint8_t object_h, uint8_t object_w){
-		if ((object_y + object_h > player_y) && (object_y < player_y + PLAYER_HEIGHT)){ 
+bool check_collision(uint16_t object_1_x, uint16_t object_1_y, uint16_t object_2_x, uint16_t object_2_y, 
+						uint8_t object_1_h, uint8_t object_1_w, uint8_t object_2_h, uint8_t object_2_w){
+		if ((object_2_y + object_2_h > object_1_y) && (object_2_y < object_1_y + object_1_h)){ 
 		//this is when the collision occurs on the right or left sides (above checks they are on the same level)(then below checks if there is collision)
-			if ((object_x < player_x + PLAYER_WIDTH) && (object_x > player_x)){ 
+			if ((object_2_x < object_1_x + object_1_w) && (object_2_x > object_1_x)){ 
 				return true;//bottom right
 			}
 			//some of this if stuff (above and below) might be able to be simplified so that you don't have to add enemy_width and player width
-			else if ((object_x + object_w > player_x) && (object_x + object_w < player_x + PLAYER_WIDTH)){
+			else if ((object_2_x + object_2_w > object_1_x) && (object_2_x + object_2_w < object_1_x + object_1_w)){
 				return true; //bottom left
 			}
 	}
-	//else if ((object_x > player_x) && (object_x < player_x + PLAYER_WIDTH)){
-	else if ((object_x + object_w > player_x) && (object_x < player_x + PLAYER_WIDTH)){
+	//else if ((object_2_x > object_1_x) && (object_2_x < object_1_x + object_1_w)){
+	else if ((object_2_x + object_2_w > object_1_x) && (object_2_x < object_1_x + object_1_w)){
 		//this is a collision occuring from the top
-		if ((object_y + object_h > player_y) && (object_y < player_y)){
+		if ((object_2_y + object_2_h > object_1_y) && (object_2_y < object_1_y)){
 			return true; //top right
 		}
-		else if ((object_y < player_y + PLAYER_HEIGHT) && (object_y > player_y)){
+		else if ((object_2_y < object_1_y + object_1_h) && (object_2_y > object_1_y)){
 			return true; //top left
 		}
 	}
@@ -374,33 +403,19 @@ void drawPortals(uint8_t level){
 					GLCD_Bitmap(portal_pairs[i].p2x,portal_pairs[i].p2y,BMP_PORTAL_WIDTH,BMP_PORTAL_HEIGHT,BMP_PORTAL_DATA);
 				}	
 	}
-	
 }
 
-
-//old check collisions incase the function doesn't work
-/*
-if ((enemies[i]->pos.y > player_y) && (enemies[i]->pos.y < player_y + PLAYER_HEIGHT)){ 
-				//this is when the collision occurs on the right or left sides (above checks they are on the same level)(then below checks if there is collision)
-				if ((enemies[i]->pos.x < player_x + PLAYER_WIDTH) && (enemies[i]->pos.x > player_x)){ 
-					collision = true;
-				}
-				//some of this if stuff (above and below) might be able to be simplified so that you don't have to add enemy_width and player width
-				else if ((enemies[i]->pos.x + ENEMY_WIDTH > player_x) && (enemies[i]->pos.x + ENEMY_WIDTH < player_x + PLAYER_WIDTH)){
-					collision = true;
-				}
-			}
-			else if ((enemies[i]->pos.x > player_x) && (enemies[i]->pos.x < player_x + PLAYER_WIDTH)){
-				//this is a collision occuring from the top
-				if ((enemies[i]->pos.y + ENEMY_HEIGHT > player_y) && (enemies[i]->pos.y < player_y)){
-					collision = true;
-				}
-				else if ((enemies[i]->pos.y < player_y + PLAYER_HEIGHT) && (enemies[i]->pos.y > player_y)){
-					collision = true;
-				}
-			}
-			if (collision){
-				break;
-			}//should have only one portal "collision"
-			
-			*/
+void redraw_all(void){
+	osMutexAcquire(game_state_id,osWaitForever);
+	if (game_state == LEVEL1){
+		GLCD_Clear(Blue);
+		drawBackground(1);
+		drawPortals(1);
+	}
+	else{
+		GLCD_Clear(Blue);
+		drawBackground(2);
+		drawPortals(2);
+	}	
+	osMutexRelease(game_state_id);
+}
