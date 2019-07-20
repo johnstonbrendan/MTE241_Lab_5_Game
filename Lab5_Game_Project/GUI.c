@@ -156,41 +156,53 @@ void animate_portals(void){
 	player_x = player_info->pos.x;
 	player_y = player_info->pos.y;
 	player_moved = (bool) player_info->delta.x;//if the player
-	for (int j = 0; j < NUM_OF_ENEMIES; j++){
-		enemy_moved = (bool) (enemies[j]->delta.x + enemies[j]->delta.y);
-		if (enemy_moved){
-			GLCD_DisplayString(0,0,1,"Enemy Moved            ");
-			break;
-		}
-	}
 	osMutexRelease(player_loc_id);
 	for (int i = 0; i < num_of_portals/2; i++){
+		if (!player_col_p1 && !player_col_p2){
+			
+			
 		player_col_p1 = check_collision(player_x, player_y, portal_pairs[i].p1x,portal_pairs[i].p1y,
-						PLAYER_HEIGHT, PLAYER_WIDTH, BMP_PORTAL_HEIGHT, BMP_PORTAL_WIDTH);
+						BMP_PLAYER_HEIGHT, BMP_PLAYER_WIDTH, BMP_PORTAL_HEIGHT, BMP_PORTAL_WIDTH);
 		if (player_col_p1){
 			portal_pair_col = i;
-			GLCD_DisplayString(0,0,1,"Hit portal p1        ");
-			break;
+			//GLCD_DisplayString(0,0,1,"Hit portal p1        ");
 		}
 		player_col_p2 = check_collision(player_x, player_y, portal_pairs[i].p2x,portal_pairs[i].p2y,
-									PLAYER_HEIGHT, PLAYER_WIDTH, BMP_PORTAL_HEIGHT, BMP_PORTAL_WIDTH);
+									BMP_PLAYER_HEIGHT, BMP_PLAYER_WIDTH, BMP_PORTAL_HEIGHT, BMP_PORTAL_WIDTH);
 		if (player_col_p2){
 			portal_pair_col = i;
-			GLCD_DisplayString(0,0,1,"Hit portal p2          ");
-			break;
+			//GLCD_DisplayString(0,0,1,"Hit portal p2          ");
 		}
+	}
 		osMutexAcquire(enemy_loc_id,osWaitForever);
 		for (int j = 0; j < NUM_OF_ENEMIES; j++){
-			enemy_col = check_collision(enemies[j]->pos.x, enemies[j]->pos.y, 
-										portal_pairs[i].p1x,portal_pairs[i].p1y, 
-										ENEMY_HEIGHT, ENEMY_WIDTH, BMP_PORTAL_HEIGHT, BMP_PORTAL_WIDTH);
-			if (enemy_col){
-				GLCD_DisplayString(0,0,1,"Enemy Collision               ");
-				break;//do enemy and portal collision
+			if (!enemy_moved){
+				enemy_moved = (bool) (enemies[j]->delta.x + enemies[j]->delta.y);
+				//GLCD_DisplayString(1,0,1,"Enemy Not Moved");
+			}
+			else{
+												//GLCD_DisplayString(1,0,1,"Enemy Moved      ");
+			}
+			if (!enemy_col){// these means no need to check any other portals for enemies collisions once one has happened
+					enemy_col = check_collision(enemies[j]->pos.x, enemies[j]->pos.y, 
+								portal_pairs[i].p1x,portal_pairs[i].p1y, 
+								BMP_ENEMY_HEIGHT, BMP_ENEMY_WIDTH, BMP_PORTAL_HEIGHT, BMP_PORTAL_WIDTH);
+					enemy_col = enemy_col || check_collision(enemies[j]->pos.x, enemies[j]->pos.y, 
+								portal_pairs[i].p2x,portal_pairs[i].p2y, 
+								BMP_ENEMY_HEIGHT, BMP_ENEMY_WIDTH, BMP_PORTAL_HEIGHT, BMP_PORTAL_WIDTH);
+				//if (enemy_col) break;//this means no need to check any other enemies
 			}
 		}
 		osMutexRelease(enemy_loc_id);
 	}
+//				if (enemy_col){
+//				GLCD_DisplayString(0,0,1,"Enemy Collision               ");
+//				//break;//do enemy and portal collision
+//			}
+//			else{
+//								GLCD_DisplayString(0,0,1,"No Enemy Collision             ");
+
+//			}
 	if (player_col_p1 || player_col_p2){// the user is colliding with a portal
 		if (button_pushed){//if the user wants to teleport
 			button_pushed = false;
@@ -211,7 +223,7 @@ void animate_portals(void){
 	}
 	if (enemy_col && enemy_moved){
 			(game_state == LEVEL1) ? drawPortals(1) : drawPortals(2);
-		GLCD_DisplayString(1,0,1,"Redraw Portals      ");
+		//GLCD_DisplayString(2,0,1,"Redraw Portals      ");
 	}
 }
 
