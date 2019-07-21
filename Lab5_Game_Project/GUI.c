@@ -332,6 +332,7 @@ void GUI_Level_Menu(void){
 		else{
 			game_state = LEVEL2;
 		}
+		osDelay(100); // kinda hacky
 	}	
 }
 
