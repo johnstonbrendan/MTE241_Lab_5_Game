@@ -727,24 +727,27 @@ void GLCD_DrawChar (unsigned int x, unsigned int y, unsigned int cw, unsigned in
   wr_dat_start();
 
   k  = (cw + 7)/8;
-
+	
+	
   if (k == 1) {
+		c += ch - 1;
     for (j = 0; j < ch; j++) {
       pixs = *(unsigned char  *)c;
-      c += 1;
+      c -= 1;
       
-      for (i = 0; i < cw; i++) {
-        wr_dat_only (Color[(pixs >> i) & 1]);
+      for (i = cw; i > 0; i--) {
+        wr_dat_only (Color[(pixs >> (i-1)) & 1]);
       }
     }
   }
   else if (k == 2) {
+		c += 2*ch - 2;
     for (j = 0; j < ch; j++) {
       pixs = *(unsigned short *)c;
-      c += 2;
+      c -= 2;
       
-      for (i = 0; i < cw; i++) {
-        wr_dat_only (Color[(pixs >> i) & 1]);
+      for (i = cw; i > 0; i--) {
+        wr_dat_only (Color[(pixs >> (i-1)) & 1]);
       }
     }
   }
@@ -785,9 +788,14 @@ void GLCD_DisplayChar (unsigned int ln, unsigned int col, unsigned char fi, unsi
 *******************************************************************************/
 
 void GLCD_DisplayString (unsigned int ln, unsigned int col, unsigned char fi, unsigned char *s) {
-
-  while (*s) {
-    GLCD_DisplayChar(ln, col++, fi, *s++);
+	unsigned char *finalIndex = s;
+	int i = 0;
+	while(*(finalIndex++)){
+		i++;
+	}
+	
+	while (*s) {
+    GLCD_DisplayChar(ln, col-- + i - 1, fi, *s++);
   }
 }
 
