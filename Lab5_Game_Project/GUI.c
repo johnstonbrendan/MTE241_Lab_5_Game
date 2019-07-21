@@ -20,13 +20,13 @@ uint8_t game_state;
 //need to make the ISR for button press below is a temp variable to store the button press
 
 const int8_t left_offset[NUM_LEVELS][NUM_FLOORS] = {
-	{0, -1, -1, 2, -1, 1, -1, 0, -1, -1}, 
-	{0, -1, 1, -1, -1, 2, -1, 3, -1, -1}
+	{0, -1, -1, 0, -1, -1, 0, -1, -1, -1}, 
+	{0, -1, 3, -1, -1, 0, -1, 0, -1, -1}
 };
 
 const int8_t right_offset[NUM_LEVELS][NUM_FLOORS] = {
-	{0, -1, -1, 0, -1, 2, -1, 1, -1, -1},
-	{4, -1, 1, -1, -1, 3, -1, 0, -1, -1} 
+	{0, -1, -1, 3, -1, -1, 0, -1, -1, -1},
+	{0, -1, 0, -1, -1, 2, -1, 5, -1, -1} 
 };
 
 portal_pair_t portal_pairs[NUM_MAX_PORTALS/2];
