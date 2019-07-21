@@ -10,6 +10,7 @@
 #define LEVEL2 2
 #define LEVEL1_COMPLETE 3
 #define LEVEL2_COMPLETE 4
+#define RESET_POT 5
 
 
 #define NUM_FLOORS 10
@@ -66,5 +67,7 @@ bool check_collision(uint16_t object_1_x, uint16_t object_1_y, uint16_t object_2
 						uint8_t object_1_h, uint8_t object_1_w, uint8_t object_2_h, uint8_t object_2_w);
 
 void redraw_all(void);
+
+void GUI_Reset_Pot(void);
 
 #endif

@@ -32,3 +32,12 @@ void Joy_Task (void*arg){
 		osThreadYield(); //put time here
 	}
 }
+
+void Joy_Reset (void){
+	osMutexAcquire(joy_val_id,osWaitForever);
+	joy_in->left = 0;
+	joy_in->right = 0;
+	joy_in->down = 0;
+	joy_in->up = 0;
+	osMutexRelease(joy_val_id);
+}
