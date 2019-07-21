@@ -9,8 +9,8 @@
 #define PLAYER_L1_INIT_X 291
 #define PLAYER_L1_INIT_Y 25
 
-#define PLAYER_L2_INIT_X 160
-#define PLAYER_L2_INIT_Y 160
+#define PLAYER_L2_INIT_X 162
+#define PLAYER_L2_INIT_Y 150
 
 
 void player_init(uint16_t initX, uint16_t initY);

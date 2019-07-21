@@ -82,8 +82,35 @@ char_pos_t enemy_path(uint8_t enemy){
 	else {//this is for level 2
 		switch (enemy){
 			case 0:
-				temp_pos.x = enemy_time/100;
-				temp_pos.y = 100;
+				//kinda suss placement
+				temp_pos.x = 270;
+				temp_pos.y = 25;
+				break;
+			case 1: 
+				temp_pos.x = 208;
+				temp_pos.y = 75;
+				break;
+			case 2:
+				temp_pos.x = 140;
+				temp_pos.y = 150;
+				break;
+			case 3:
+				temp_pos.x = 190;
+				temp_pos.y = 150;
+				break;
+			case 4:
+				temp_pos.x = 99;
+				temp_pos.y = 200;
+				break;
+			case 5:
+				temp_pos.x = 183;
+				temp_pos.y = 200;
+				break;
+			case 6:
+				temp_pos.x = 125;
+				temp_pos.y = 200;
+				break;		
+				
 			default:
 				return temp_pos;
 		}

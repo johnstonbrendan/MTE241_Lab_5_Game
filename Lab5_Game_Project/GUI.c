@@ -43,7 +43,7 @@ void GUI_Start(void){
 	GLCD_DisplayChar(18,33,0,'>');
 	game_state_id = osMutexNew(NULL);
 	game_state = MAINMENU;//no need mutex as the threads have not started yet
-	//game_state = LEVEL1;//THIS IS ONLY HERE FOR TESTING
+	//game_state = LEVEL2;//THIS IS ONLY HERE FOR TESTING
 }
 
 
