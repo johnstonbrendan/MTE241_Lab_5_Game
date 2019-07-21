@@ -78,6 +78,9 @@ void GUI_Level_1(void){
 	drawBackground(1);//include end goal in the background
 	drawPortals(1);
 	while(game_state == LEVEL1){
+#if GOD_MODE
+			animate_player();
+#else
 			animate_portals();
 			animate_player();
 			for (int i = 0; i < NUM_OF_ENEMIES - 1; i++) {
@@ -86,6 +89,7 @@ void GUI_Level_1(void){
 			animate_enemy(enemies[NUM_OF_ENEMIES - 1],true);//this will be the enemy you need to catch
 			animate_collisions();//collision will handle both hitting an enemy and getting to the end goal
 			//end point stored in bitmaps.h
+#endif
 	}
 }
 
@@ -110,7 +114,8 @@ void animate_enemy(char_info_t* enemy, bool to_catch){
 
 void animate_player(void){
 	osMutexAcquire(player_loc_id,osWaitForever);
-	if (!player_info->teleport){//do the common animation
+	if(GOD_MODE && (abs(player_info->delta.x) > 0 || abs(player_info->delta.y)>0)) printf("x: %d, y: %d\n", player_info->pos.x, player_info->pos.y);
+	if (!player_info->teleport){//do the common an	imation
 		if(abs(player_info->delta.x) > 0) togglePlayerBitmap();
 		player_info->pos.x = player_info->pos.x + player_info->delta.x;
 		player_info->pos.y = player_info->pos.y + player_info->delta.y;

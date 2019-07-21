@@ -2,7 +2,11 @@
 #ifndef _ENEMY_H
 #define _ENEMY_H
 
+#if GOD_MODE
+#define NUM_OF_ENEMIES 1
+#else
 #define NUM_OF_ENEMIES 3
+#endif
 #define NUM_OF_FRAMES 5
 
 

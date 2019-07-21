@@ -15,8 +15,13 @@
 #define NUM_FLOORS 10
 
 #define NUM_MAX_PORTALS 6 //must be even
+#if GOD_MODE
+#define NUM_L1_PORTALS 0
+#define NUM_L2_PORTALS 0
+#else
 #define NUM_L1_PORTALS 4
 #define NUM_L2_PORTALS 6
+#endif
 
 #define L1_portal_0_x 100 //make sure the y1 is larger than the y2 and check that they are exactly above the level by a portal height value
 #define L1_portal_0_y 150

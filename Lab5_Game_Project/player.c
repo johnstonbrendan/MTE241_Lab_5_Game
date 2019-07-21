@@ -32,8 +32,8 @@ void player_task(void* args){
 		verticalMove = 0;
 		// do i need to move? 
 		osMutexAcquire(joy_val_id, osWaitForever);
-				horizontalMove = joy_in->right - joy_in->left;
-				if(GOD_MODE) verticalMove = -(joy_in->up - joy_in->down);
+				horizontalMove = joy_in->left - joy_in->right;
+				if(GOD_MODE) verticalMove = (joy_in->up - joy_in->down);
 				joy_in->right = 0;
 				joy_in->left = 0;
 				joy_in->up = 0;
