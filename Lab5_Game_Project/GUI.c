@@ -221,7 +221,9 @@ void animate_portals(void){
 		}else if (player_moved){//player and portal are overlapping and need to redraw a part of the portal and the player has moved
 			(game_state == LEVEL1) ? drawPortals(1) : drawPortals(2);
 		}
-	}
+	} 
+	
+	button_pushed = false;
 	if (enemy_col && enemy_moved){
 			(game_state == LEVEL1) ? drawPortals(1) : drawPortals(2);
 		//GLCD_DisplayString(2,0,1,"Redraw Portals      ");
