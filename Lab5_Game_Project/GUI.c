@@ -468,6 +468,14 @@ void drawPortals(uint8_t level){
 		portal_pairs[2].p1y = L2_portal_4_y;
 		portal_pairs[2].p2x = L2_portal_5_x;
 		portal_pairs[2].p2y = L2_portal_5_y;
+		portal_pairs[3].p1x = L2_portal_6_x;
+		portal_pairs[3].p1y = L2_portal_6_y;
+		portal_pairs[3].p2x = L2_portal_7_x;
+		portal_pairs[3].p2y = L2_portal_7_y;
+		portal_pairs[4].p1x = L2_portal_8_x;
+		portal_pairs[4].p1y = L2_portal_8_y;
+		portal_pairs[4].p2x = L2_portal_9_x;
+		portal_pairs[4].p2y = L2_portal_9_y;
 		for (int i = NUM_L2_PORTALS/2; i < NUM_MAX_PORTALS/2; i++){
 			portal_pairs[i].p1x = portal_pairs[i].p2x = 1000;
 			portal_pairs[i].p1y = portal_pairs[i].p2y = 1000;
