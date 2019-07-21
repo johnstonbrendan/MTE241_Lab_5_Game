@@ -218,6 +218,7 @@ void animate_portals(void){
 				player_info->delta.y = portal_pairs[portal_pair_col].p1y - player_info -> pos.y;
 			}
 			osMutexRelease(player_loc_id);
+			osDelay(100); // osKernelGetSysTimerFreq not working, 100 works ok but kinda hacky
 		}else if (player_moved){//player and portal are overlapping and need to redraw a part of the portal and the player has moved
 			(game_state == LEVEL1) ? drawPortals(1) : drawPortals(2);
 		}
