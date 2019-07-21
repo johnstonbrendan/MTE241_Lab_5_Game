@@ -96,6 +96,7 @@ void GUI_Level_1(void){
 	while(game_state == LEVEL1){
 #if GOD_MODE
 			animate_player();
+	
 #else
 			animate_portals();
 			animate_player();
@@ -418,6 +419,10 @@ void drawPortals(uint8_t level){
 		portal_pairs[1].p1y = L1_portal_2_y;
 		portal_pairs[1].p2x = L1_portal_3_x;
 		portal_pairs[1].p2y = L1_portal_3_y;
+		portal_pairs[2].p1x = L1_portal_4_x;
+		portal_pairs[2].p1y = L1_portal_4_y;
+		portal_pairs[2].p2x = L1_portal_5_x;
+		portal_pairs[2].p2y = L1_portal_5_y;
 		for (int i = NUM_L1_PORTALS/2; i < NUM_MAX_PORTALS/2; i++){
 			portal_pairs[i].p1x = portal_pairs[i].p2x = 1000;
 			portal_pairs[i].p1y = portal_pairs[i].p2y = 1000;
