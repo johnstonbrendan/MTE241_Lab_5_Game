@@ -36,6 +36,7 @@ void GUI_Start(void){
 	GLCD_Clear(Blue);
 	//no need mutex here because only the GUI tasks will access it
 	sel_lev = 1;
+	initializeGreenEnemy();
 	GLCD_DisplayString(14, 18, 0, "  Level 1");
 	GLCD_DisplayString(18, 18, 0, "  Level 2");
 	GLCD_DisplayChar(14,18,0,'>');
@@ -101,7 +102,7 @@ void animate_enemy(char_info_t* enemy, bool to_catch){
 		GLCD_Bitmap(enemy->pos.x,enemy->pos.y,BMP_ENEMY_WIDTH,BMP_ENEMY_HEIGHT,BMP_ENEMY_DATA);//this should be replaced with an animate function
 	}
 	else{
-		GLCD_Bitmap(enemy->pos.x,enemy->pos.y,BMP_ENEMY_WIDTH,BMP_ENEMY_HEIGHT,BMP_ENEMY_DATA);//this needs to be the golden enemy bitmap
+		GLCD_Bitmap(enemy->pos.x,enemy->pos.y,BMP_ENEMY_WIDTH,BMP_ENEMY_HEIGHT, BMP_GREEN_ENEMY_DATA);//this needs to be the golden enemy bitmap
 	}
 	osMutexRelease(enemy_loc_id);
 }

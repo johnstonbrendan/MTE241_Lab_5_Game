@@ -35,7 +35,7 @@ const unsigned char grassblock[20 * 25 * 2 + 1] =
  "\345(\005\061&\071F\071&\071\005)\345(\345\040\345\040\345(&\061gA\005)\005)\344\040\004!\005"
  "!\345\040\345(\345(F\061\207Af\071&\061\345(\304(\305(");
 
-const unsigned char bmp_enemy_data[23 * 23 * 3 + 1] =
+const unsigned char bmp_enemy_data[23 * 23 * 2 + 1] =
 ("\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37"
  "\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37"
  "\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37"
@@ -71,7 +71,9 @@ const unsigned char bmp_enemy_data[23 * 23 * 3 + 1] =
  "\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37"
  "\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37"
  "\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0");
-
+ 
+ unsigned char *bmp_green_enemy_data = NULL;
+ 
  
 unsigned char bmp_player_data[30 * 30 * 2 + 1] =
 ("\037\000\037\000\037\000\037\000\037\000\037\000\037\000\037\000\037\000\037\000\037\000\037\000\037\000\037\000\037"
@@ -155,4 +157,24 @@ unsigned char bmp_player_data[30 * 30 * 2 + 1] =
      }
 		 animCount = ANIM_COUNT_RESET_VAL;
 	 }
+ }
+
+ void initializeGreenEnemy() {
+	 if(bmp_green_enemy_data == NULL)
+			bmp_green_enemy_data = malloc(23*23*2 + 1);
+	 
+	 uint16_t toReplace = 0x0000;
+	 uint16_t replaceWith = 0x0400;
+		 
+	 for(int i = 0; i < 23*23*2; i+=2) { 
+		 if((bmp_enemy_data[i] == (toReplace & 0xFF)) && (bmp_enemy_data[i + 1] == (toReplace >> 8))) {
+			 bmp_green_enemy_data[i] = replaceWith & 0xFF;
+			 bmp_green_enemy_data[i+1] = replaceWith >> 8;
+		 }
+		 else {
+			 bmp_green_enemy_data[i] = bmp_enemy_data[i];
+			 bmp_green_enemy_data[i+1] = bmp_enemy_data[i+1];
+		 }
+	 }			 
+		 
  }
