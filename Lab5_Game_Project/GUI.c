@@ -38,9 +38,9 @@ void GUI_Start(void){
 	//no need mutex here because only the GUI tasks will access it
 	sel_lev = 1;
 	initializeTargetEnemy();
-	GLCD_DisplayString(14, 18, 0, "  Level 1");
-	GLCD_DisplayString(18, 18, 0, "  Level 2");
-	GLCD_DisplayChar(14,18,0,'>');
+	GLCD_DisplayString(18, 25, 0, "  Level 1");
+	GLCD_DisplayString(14, 25, 0, "  Level 2");
+	GLCD_DisplayChar(18,33,0,'>');
 	game_state_id = osMutexNew(NULL);
 	game_state = MAINMENU;//no need mutex as the threads have not started yet
 	//game_state = LEVEL1;//THIS IS ONLY HERE FOR TESTING
@@ -338,12 +338,12 @@ void GUI_Level_Menu(void){
 	
 	if(level_changed) {
 		if (sel_lev == 1){
-			GLCD_DisplayString(18, 18, 0, "  Level 2");
-			GLCD_DisplayChar(14,18,0,'>');
+			GLCD_DisplayString(14, 25, 0, "  Level 2");
+			GLCD_DisplayChar(18,33,0,'>');
 		}
 		else{
-			GLCD_DisplayString(14, 18, 0, "  Level 1");
-			GLCD_DisplayChar(18,18,0,'>');
+			GLCD_DisplayString(18, 25, 0, "  Level 1");
+			GLCD_DisplayChar(14,33,0,'>');
 		}	
 	}
 	
