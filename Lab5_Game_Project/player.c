@@ -29,11 +29,11 @@ void player_task(void* args){
 	while(game_state == LEVEL1 || game_state == LEVEL2) {
 		//get the joystick values
 		
-
-		// do i need to move? 
 		verticalMove = 0;
+		// do i need to move? 
 		osMutexAcquire(joy_val_id, osWaitForever);
 				horizontalMove = joy_in->right - joy_in->left;
+				if(GOD_MODE) verticalMove = -(joy_in->up - joy_in->down);
 				joy_in->right = 0;
 				joy_in->left = 0;
 				joy_in->up = 0;
@@ -78,7 +78,8 @@ void legalize(int16_t* x, int16_t* y) {//may be able to just put this into the l
 
 	int16_t temp_x = *x;
 	int16_t temp_y = *y;
-	while(!isFloor(game_state, temp_x, temp_y) || !isFloor(game_state, temp_x, temp_y)){
+			
+	while(!GOD_MODE && (!isFloor(game_state, temp_x, temp_y) || !isFloor(game_state, temp_x, temp_y))){
 		// bring back x one grassblock width towards player
 		temp_x = temp_x - (temp_x - player_info->pos.x)/abs(temp_x - player_info->pos.x); // * BMP_GRASSBLOCK_W?
 		// we can even add falling like this? maybe?

@@ -7,6 +7,7 @@
 
 #ifndef _TYPE_DECL_H
 #define _TYPE_DECL_H
+#define GOD_MODE 1
 typedef struct{
 	uint8_t up;
 	uint8_t down;
