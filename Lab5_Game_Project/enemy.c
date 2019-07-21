@@ -99,18 +99,17 @@ char_pos_t enemy_path(uint8_t enemy){
 				temp_pos.y = 150;
 				break;
 			case 4:
-				temp_pos.x = 99;
+				temp_pos.x = 0.02*enemy_time + 99;
 				temp_pos.y = 200;
 				break;
 			case 5:
-				temp_pos.x = 183;
+				temp_pos.x = 0.02*enemy_time  + 183;
 				temp_pos.y = 200;
 				break;
 			case 6:
-				temp_pos.x = 125;
+				temp_pos.x = 0.02*enemy_time+ 125;
 				temp_pos.y = 200;
-				break;		
-				
+				break;						
 			default:
 				return temp_pos;
 		}

@@ -38,6 +38,7 @@ void GUI_Start(void){
 	//no need mutex here because only the GUI tasks will access it
 	sel_lev = 1;
 	initializeTargetEnemy();
+	initializeBackgroundBitmap(30, 30, 0x00FE);
 	GLCD_DisplayString(18, 25, 0, "  Level 1");
 	GLCD_DisplayString(14, 25, 0, "  Level 2");
 	GLCD_DisplayChar(18,33,0,'>');
@@ -141,15 +142,28 @@ void animate_enemy(char_info_t* enemy, bool to_catch){
 	//GLCD_Bitmap(100,100,ENEMY_WIDTH,ENEMY_HEIGHT,BMP_ENEMY_DATA);
 	enemy->pos.x = enemy->pos.x + enemy->delta.x;
 	enemy->pos.y = enemy->pos.y + enemy->delta.y;
-	enemy->delta.x = 0;
-	enemy->delta.y = 0; //maybe make all this into a function
+
 //	GLCD_Bitmap(0,0,30,30,BMP_ENEMY_DATA);
+	if(abs(enemy->delta.x) || abs(enemy->delta.y)){
+			int16_t width = abs(enemy->delta.x);
+			while(width > 0) {
+				if(enemy->delta.x > 0) 
+					GLCD_Bitmap(enemy->pos.x - enemy->delta.x, enemy->pos.y - enemy-> delta.y, width%30, BMP_ENEMY_HEIGHT, backgroundBitmap);
+				else
+					GLCD_Bitmap(enemy->pos.x - 2*enemy->delta.x, enemy->pos.y - enemy-> delta.y, width%30, BMP_ENEMY_HEIGHT, backgroundBitmap);
+
+				width -= 30;
+			}
+	}
+
 	if (!to_catch){
 		GLCD_Bitmap(enemy->pos.x,enemy->pos.y,BMP_ENEMY_WIDTH,BMP_ENEMY_HEIGHT,BMP_ENEMY_DATA);//this should be replaced with an animate function
 	}
 	else{
 		GLCD_Bitmap(enemy->pos.x,enemy->pos.y,BMP_ENEMY_WIDTH,BMP_ENEMY_HEIGHT, BMP_TGT_ENEMY_DATA);//this needs to be the golden enemy bitmap
 	}
+	enemy->delta.x = 0;
+	enemy->delta.y = 0; //maybe make all this into a function
 	osMutexRelease(enemy_loc_id);
 }
 
