@@ -6,24 +6,25 @@
 #include "Pot.h"
 #include <math.h>
 #include "bitmaps.h"
+#include "GUI.h"
 
 osMutexId_t enemy_loc_id;
 
 int32_t enemy_time;
 //const uint8_t ENEMY_BIT[NUM_OF_ENEMIES][NUM_OF_FRAMES][900];
-char_info_t* enemies[NUM_OF_ENEMIES];
+char_info_t* enemies[MAX_NUM_OF_ENEMIES];
 
 void enemy_init(void){
 	
 	enemy_time = 0;//probably need to change this to be the inital position of the POT
-	for (int i = 0; i < NUM_OF_ENEMIES; i++){
+	for (int i = 0; i < MAX_NUM_OF_ENEMIES; i++){
 		enemies[i] = malloc(sizeof(char_info_t));
 	}
 //	enemies = malloc(sizeof(char_info_t)*NUM_OF_ENEMIES);
 	char_pos_t *temp_pos = malloc(sizeof(char_pos_t));
 	temp_pos->x = temp_pos->y = 130;
 	enemy_loc_id = osMutexNew(NULL);
-	for (int i = 0; i <NUM_OF_ENEMIES; i++){
+	for (int i = 0; i < MAX_NUM_OF_ENEMIES; i++){
 		//*(enemies[i].pos) = enemy_path(i, enemy_time);
 		enemies[i]->pos.x = enemy_path(i).x; //this should be changed to the path functions
 		enemies[i]->pos.y = enemy_path(i).y;
@@ -35,14 +36,16 @@ void enemy_init(void){
 }
 
 void enemy_task(void *arg){
+	uint8_t num_of_enemies;
 	while(true){
+		num_of_enemies = (game_state == LEVEL1) ? NUM_OF_L1_ENEMIES : NUM_OF_L2_ENEMIES;
 		osMutexAcquire(pot_val_id,osWaitForever);
 		//enemy_time = (pot_val - 4095/2);
 		enemy_time = pot_val;
 		enemy_time = enemy_time - enemy_time%10; //this will smooth the graphics as time won't change so easily.
 		osMutexRelease(pot_val_id);
 		osMutexAcquire(enemy_loc_id,osWaitForever);
-		for (int i = 0; i < NUM_OF_ENEMIES; i++){
+		for (int i = 0; i < num_of_enemies; i++){
 			(enemies[i]->delta).x = enemy_path(i).x - (enemies[i]->pos).x ; //need to change this to add the delta stuff
 			(enemies[i]->delta).y = enemy_path(i).y - (enemies[i]->pos).y; //need to change this to add the delta stuff
 		}
@@ -55,24 +58,35 @@ void enemy_task(void *arg){
 char_pos_t enemy_path(uint8_t enemy){
 	char_pos_t temp_pos;
 	temp_pos.x = temp_pos.y = -1;
-	switch (enemy){
-	case 0:
-//		temp_pos.x = (uint32_t)sin(enemy_time);//probably have to multiply this by some value for display
-	temp_pos.x = enemy_time/100 + 100;
-	temp_pos.y = (enemy_time/50)+150;//probably need to adjust this for display
-		break;
-	case 1:
-		temp_pos.x = enemy_time/100+30;
-		//temp_pos.y = (uint32_t)tan(enemy_time);
-		//temp_pos.y = 20*sin(temp_pos.x)+100;
-		temp_pos.y = (enemy_time/50)+150;
-		break;
-	case 2:
-		temp_pos.x = 200;
-		temp_pos.y = (enemy_time/50)+150;
-		break;
-	default:
-		return temp_pos;
+	if (game_state == LEVEL1){
+		switch (enemy){
+			case 0:
+		//		temp_pos.x = (uint32_t)sin(enemy_time);//probably have to multiply this by some value for display
+			temp_pos.x = enemy_time/100 + 100;
+			temp_pos.y = (enemy_time/50)+150;//probably need to adjust this for display
+				break;
+			case 1:
+				temp_pos.x = enemy_time/100+30;
+				//temp_pos.y = (uint32_t)tan(enemy_time);
+				//temp_pos.y = 20*sin(temp_pos.x)+100;
+				temp_pos.y = (enemy_time/50)+150;
+				break;
+			case 2:
+				temp_pos.x = 200;
+				temp_pos.y = (enemy_time/50)+150;
+				break;
+			default:
+				return temp_pos;
+			}
+	}
+	else {//this is for level 2
+		switch (enemy){
+			case 0:
+				temp_pos.x = enemy_time/100;
+				temp_pos.y = 100;
+			default:
+				return temp_pos;
+		}
 	}
 	return temp_pos;
 }

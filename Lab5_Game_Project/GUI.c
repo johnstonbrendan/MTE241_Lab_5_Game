@@ -67,11 +67,14 @@ void GUI_Task(void *arg){
 			//do stuff for level 1 GUI
 		}
 		else if (game_state == LEVEL2){
-			
+			GLCD_Clear(Blue);
+			player_reset();
+			Joy_Reset();
+			GUI_Level_2();
 			if (game_state == RESET_POT){
 				GUI_Reset_Pot();
 				osMutexAcquire(game_state_id,osWaitForever);
-				game_state = LEVEL1;
+				game_state = LEVEL2;
 				osMutexRelease(game_state_id);
 			}
 			GLCD_DisplayString(20,20,0,"LEVEL 2 PLACEHOLDER");
@@ -79,12 +82,12 @@ void GUI_Task(void *arg){
 		}	
 		else if (game_state == LEVEL1_COMPLETE){
 			GLCD_Clear(Green);
-			GLCD_DisplayString(20,20,1,"Congrats yo yo you did it!!!!! nOW TRY LEVEL 2 :)");
+			GLCD_DisplayString(20,20,0,"Congrats yo yo you did it!!!!! nOW TRY LEVEL 2 :)");
 			break;
 		}
 		else if (game_state == LEVEL2_COMPLETE){
 			GLCD_Clear(Red);
-			GLCD_DisplayString(20,20,1,"Congrats yoU COMPLETED LEVEL 2");
+			GLCD_DisplayString(20,20,0,"Congrats yoU COMPLETED LEVEL 2");
 		}
 	}
 }
@@ -93,20 +96,42 @@ void GUI_Task(void *arg){
 void GUI_Level_1(void){
 	drawBackground(1);//include end goal in the background
 	drawPortals(1);
+	uint8_t num_of_enemies = (game_state == LEVEL1) ? NUM_OF_L1_ENEMIES : NUM_OF_L2_ENEMIES;
 	while(game_state == LEVEL1){
 #if GOD_MODE
 			animate_player();
 #else
 			animate_portals();
 			animate_player();
-			for (int i = 0; i < NUM_OF_ENEMIES - 1; i++) {
+			for (int i = 0; i < num_of_enemies - 1; i++) {
 				animate_enemy(enemies[i], false);
 			}
-			animate_enemy(enemies[NUM_OF_ENEMIES - 1],true);//this will be the enemy you need to catch
+			animate_enemy(enemies[num_of_enemies - 1],true);//this will be the enemy you need to catch
 			animate_collisions();//collision will handle both hitting an enemy and getting to the end goal
 			//end point stored in bitmaps.h
 #endif
 	}
+}
+
+void GUI_Level_2(void){
+	drawBackground(2);
+	drawPortals(2);
+	uint8_t num_of_enemies = (game_state == LEVEL1) ? NUM_OF_L1_ENEMIES : NUM_OF_L2_ENEMIES;
+	while(game_state == LEVEL2){
+#if GOD_MODE
+			animate_player();
+#else
+			animate_portals();
+			animate_player();
+			for (int i = 0; i < num_of_enemies - 1; i++) {
+				animate_enemy(enemies[i], false);
+			}
+			animate_enemy(enemies[num_of_enemies - 1],true);//this will be the enemy you need to catch
+			animate_collisions();//collision will handle both hitting an enemy and getting to the end goal
+			//end point stored in bitmaps.h
+#endif
+	}	
+	
 }
 
 void animate_enemy(char_info_t* enemy, bool to_catch){
@@ -171,6 +196,7 @@ void animate_portals(void){
 	bool player_moved, enemy_moved = false;
 	osMutexAcquire(game_state_id,osWaitForever);
 	uint8_t num_of_portals = (game_state == LEVEL1) ? NUM_L1_PORTALS : NUM_L2_PORTALS;
+	uint8_t num_of_enemies = (game_state == LEVEL1) ? NUM_OF_L1_ENEMIES : NUM_OF_L2_ENEMIES;
 	osMutexRelease(game_state_id);
 	uint8_t portal_pair_col = 100;//this is means invalid for now//this will store which portal pair had the collision
 	bool player_col_p1, player_col_p2 = false, enemy_col = false;
@@ -197,7 +223,7 @@ void animate_portals(void){
 		}
 	}
 		osMutexAcquire(enemy_loc_id,osWaitForever);
-		for (int j = 0; j < NUM_OF_ENEMIES; j++){
+		for (int j = 0; j < num_of_enemies; j++){
 			if (!enemy_moved){
 				enemy_moved = (bool) (enemies[j]->delta.x + enemies[j]->delta.y);
 				//GLCD_DisplayString(1,0,1,"Enemy Not Moved");
@@ -255,16 +281,17 @@ void animate_portals(void){
 void animate_collisions(void){
 	uint16_t player_x, player_y = 0;
 	bool collision,golden_enemy = false;
+	uint8_t num_of_enemies = (game_state == LEVEL1) ? NUM_OF_L1_ENEMIES : NUM_OF_L2_ENEMIES;
 	osMutexAcquire(player_loc_id,osWaitForever);
 	player_x = player_info->pos.x;
 	player_y = player_info->pos.y;
 	osMutexRelease(player_loc_id);
 	osMutexAcquire(enemy_loc_id,osWaitForever);
-	for (int i = 0; i < NUM_OF_ENEMIES; i++){
+	for (int i = 0; i < num_of_enemies; i++){
 		collision = check_collision(player_x, player_y, enemies[i]->pos.x, enemies[i]->pos.y,
 							PLAYER_HEIGHT,PLAYER_WIDTH, ENEMY_HEIGHT, ENEMY_WIDTH);
 		if (collision){
-			if(i == NUM_OF_ENEMIES - 1){
+			if(i == num_of_enemies - 1){
 				golden_enemy = true;
 			}
 			break;
@@ -362,7 +389,7 @@ void GUI_Level_Menu(void){
 
 void drawBackground(uint8_t level){ 
 	if(level > NUM_LEVELS) {
-		GLCD_DisplayString(0, 0, 1, "Invalid lvl drawbg!");
+		GLCD_DisplayString(0, 0, 0, "Invalid lvl drawbg!");
 		for(;;); // get stuck here for debugger!
 	}
 	level--;
@@ -432,6 +459,10 @@ void drawPortals(uint8_t level){
 		portal_pairs[1].p1y = L2_portal_2_y;
 		portal_pairs[1].p2x = L2_portal_3_x;
 		portal_pairs[1].p2y = L2_portal_3_y;
+		portal_pairs[2].p1x = L2_portal_4_x;
+		portal_pairs[2].p1y = L2_portal_4_y;
+		portal_pairs[2].p2x = L2_portal_5_x;
+		portal_pairs[2].p2y = L2_portal_5_y;
 		for (int i = NUM_L2_PORTALS/2; i < NUM_MAX_PORTALS/2; i++){
 			portal_pairs[i].p1x = portal_pairs[i].p2x = 1000;
 			portal_pairs[i].p1y = portal_pairs[i].p2y = 1000;

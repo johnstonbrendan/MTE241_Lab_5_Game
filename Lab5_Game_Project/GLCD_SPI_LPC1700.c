@@ -13,7 +13,7 @@
 #include <lpc17xx.h>
 #include "GLCD.h"
 #include "Font_6x8_h.h"
-#include "Font_16x24_h.h"
+//#include "Font_16x24_h.h"
 
 /************************** Orientation  configuration ************************/
 
@@ -772,7 +772,8 @@ void GLCD_DisplayChar (unsigned int ln, unsigned int col, unsigned char fi, unsi
       GLCD_DrawChar(col *  6, ln *  8,  6,  8, (unsigned char *)&Font_6x8_h  [c * 8]);
       break;
     case 1:  /* Font 16 x 24 */
-      GLCD_DrawChar(col * 16, ln * 24, 16, 24, (unsigned char *)&Font_16x24_h[c * 24]);
+      GLCD_DrawChar(col *  6, ln *  8,  6,  8, (unsigned char *)&Font_6x8_h  [c * 8]); 
+		// GLCD_DrawChar(col * 16, ln * 24, 16, 24, (unsigned char *)&Font_16x24_h[c * 24]);
       break;
   }
 }
