@@ -72,7 +72,7 @@ const unsigned char bmp_enemy_data[23 * 23 * 2 + 1] =
  "\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37"
  "\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0\37\0");
  
- unsigned char *bmp_green_enemy_data = NULL;
+ unsigned char *bmp_tgt_enemy_data = NULL;
  
  
 unsigned char bmp_player_data[30 * 30 * 2 + 1] =
@@ -159,21 +159,21 @@ unsigned char bmp_player_data[30 * 30 * 2 + 1] =
 	 }
  }
 
- void initializeGreenEnemy() {
-	 if(bmp_green_enemy_data == NULL)
-			bmp_green_enemy_data = malloc(23*23*2 + 1);
+ void initializeTargetEnemy() {
+	 if(bmp_tgt_enemy_data == NULL)
+			bmp_tgt_enemy_data = malloc(23*23*2 + 1);
 	 
 	 uint16_t toReplace = 0x0000;
 	 uint16_t replaceWith = 0x0400;
 		 
 	 for(int i = 0; i < 23*23*2; i+=2) { 
 		 if((bmp_enemy_data[i] == (toReplace & 0xFF)) && (bmp_enemy_data[i + 1] == (toReplace >> 8))) {
-			 bmp_green_enemy_data[i] = replaceWith & 0xFF;
-			 bmp_green_enemy_data[i+1] = replaceWith >> 8;
+			 bmp_tgt_enemy_data[i] = replaceWith & 0xFF;
+			 bmp_tgt_enemy_data[i+1] = replaceWith >> 8;
 		 }
 		 else {
-			 bmp_green_enemy_data[i] = bmp_enemy_data[i];
-			 bmp_green_enemy_data[i+1] = bmp_enemy_data[i+1];
+			 bmp_tgt_enemy_data[i] = bmp_enemy_data[i];
+			 bmp_tgt_enemy_data[i+1] = bmp_enemy_data[i+1];
 		 }
 	 }			 
 		 
