@@ -20,13 +20,13 @@ uint8_t game_state;
 //need to make the ISR for button press below is a temp variable to store the button press
 
 const int8_t left_offset[NUM_LEVELS][NUM_FLOORS] = {
-	{0, -1, -1, 2, -1, 1, -1, 0, -1, -1}, 
-	{0, -1, 1, -1, -1, 2, -1, 3, -1, -1}
+	{0, -1, -1, 0, -1, -1, 0, -1, -1, -1}, 
+	{0, -1, 3, -1, -1, 0, -1, 0, -1, -1}
 };
 
 const int8_t right_offset[NUM_LEVELS][NUM_FLOORS] = {
-	{0, -1, -1, 0, -1, 2, -1, 1, -1, -1},
-	{4, -1, 1, -1, -1, 3, -1, 0, -1, -1} 
+	{0, -1, -1, 3, -1, -1, 0, -1, -1, -1},
+	{0, -1, 0, -1, -1, 2, -1, 5, -1, -1} 
 };
 
 portal_pair_t portal_pairs[NUM_MAX_PORTALS/2];
@@ -100,6 +100,7 @@ void GUI_Level_1(void){
 	while(game_state == LEVEL1){
 #if GOD_MODE
 			animate_player();
+	
 #else
 			animate_portals();
 			animate_player();
@@ -445,6 +446,10 @@ void drawPortals(uint8_t level){
 		portal_pairs[1].p1y = L1_portal_2_y;
 		portal_pairs[1].p2x = L1_portal_3_x;
 		portal_pairs[1].p2y = L1_portal_3_y;
+		portal_pairs[2].p1x = L1_portal_4_x;
+		portal_pairs[2].p1y = L1_portal_4_y;
+		portal_pairs[2].p2x = L1_portal_5_x;
+		portal_pairs[2].p2y = L1_portal_5_y;
 		for (int i = NUM_L1_PORTALS/2; i < NUM_MAX_PORTALS/2; i++){
 			portal_pairs[i].p1x = portal_pairs[i].p2x = 1000;
 			portal_pairs[i].p1y = portal_pairs[i].p2y = 1000;
