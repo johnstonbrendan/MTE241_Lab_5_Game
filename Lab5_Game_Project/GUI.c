@@ -10,8 +10,9 @@
 #include "bitmaps.h"
 #include "player.h"
 #include <math.h>
-#include "Font_6x8_h.h"
 #include <stdio.h>
+#include "Pot.h"
+#include "Joy.h"
 
 uint8_t sel_lev;
 osMutexId_t game_state_id;
@@ -42,7 +43,7 @@ void GUI_Start(void){
 	GLCD_DisplayChar(14,18,0,'>');
 	game_state_id = osMutexNew(NULL);
 	game_state = MAINMENU;//no need mutex as the threads have not started yet
-	game_state = LEVEL1;//THIS IS ONLY HERE FOR TESTING
+	//game_state = LEVEL1;//THIS IS ONLY HERE FOR TESTING
 }
 
 
@@ -53,11 +54,26 @@ void GUI_Task(void *arg){
 		}
 		else if (game_state == LEVEL1){
 			GLCD_Clear(Blue);//do blue for background
+			player_reset();
+			Joy_Reset();
 			GUI_Level_1();
+			if (game_state == RESET_POT){
+				GUI_Reset_Pot();
+				osMutexAcquire(game_state_id,osWaitForever);
+				game_state = LEVEL1;
+				osMutexRelease(game_state_id);
+			}
 			GLCD_DisplayString(20,20,0,"LEVEL 1 PLACEHOLDER");
 			//do stuff for level 1 GUI
 		}
 		else if (game_state == LEVEL2){
+			
+			if (game_state == RESET_POT){
+				GUI_Reset_Pot();
+				osMutexAcquire(game_state_id,osWaitForever);
+				game_state = LEVEL1;
+				osMutexRelease(game_state_id);
+			}
 			GLCD_DisplayString(20,20,0,"LEVEL 2 PLACEHOLDER");
 			//do stuff for level 2 GUI
 		}	
@@ -263,9 +279,12 @@ void animate_collisions(void){
 	if (collision && !golden_enemy){
 		osMutexAcquire(player_loc_id, osWaitForever);
 		player_info->teleport = true;
-		player_info->delta.x = PLAYER_INIT_X - player_info->pos.x;
-		player_info->delta.y = PLAYER_INIT_Y - player_info->pos.y;
+		player_info->delta.x = (game_state == LEVEL1) ? PLAYER_L1_INIT_X - player_info->pos.x : PLAYER_L2_INIT_X - player_info->pos.x;
+		player_info->delta.y = (game_state == LEVEL1) ? PLAYER_L1_INIT_Y - player_info->pos.y : PLAYER_L2_INIT_Y - player_info->pos.y;
 		osMutexRelease(player_loc_id);
+		osMutexAcquire(game_state_id,osWaitForever);
+		game_state = RESET_POT;
+		osMutexRelease(game_state_id);
 		// do stuff to handle collision like acquiring the mutexes and then teleporting the player back to the original space
 	}
 }
@@ -361,8 +380,9 @@ void drawBackground(uint8_t level){
 
 bool isFloor(uint8_t level, uint16_t x, uint16_t y) { 
 	if(level > NUM_LEVELS) {
-		GLCD_DisplayString(0, 0, 1, "Invalid lvl isFloor!");
-		for(;;); // get stuck here for debugger!
+		return false;
+		//GLCD_DisplayString(0, 0, 1, "Invalid lvl isFloor!");
+		//for(;;); // get stuck here for debugger!
 	}
 
 	level--;
@@ -424,6 +444,16 @@ void drawPortals(uint8_t level){
 					GLCD_Bitmap(portal_pairs[i].p1x,portal_pairs[i].p1y,BMP_PORTAL_WIDTH,BMP_PORTAL_HEIGHT,BMP_PORTAL_DATA);
 					GLCD_Bitmap(portal_pairs[i].p2x,portal_pairs[i].p2y,BMP_PORTAL_WIDTH,BMP_PORTAL_HEIGHT,BMP_PORTAL_DATA);
 				}	
+	}
+}
+
+void GUI_Reset_Pot(void){
+	GLCD_Clear(White);
+	GLCD_DisplayString(2,0,0, "Rotate Pot counter   ");
+	GLCD_DisplayString(5,0,0, "clockwise to cont...");
+	bool pot_reset = false;
+	while(!pot_reset){
+		pot_reset = (pot_val > 4000) ? true:false;
 	}
 }
 

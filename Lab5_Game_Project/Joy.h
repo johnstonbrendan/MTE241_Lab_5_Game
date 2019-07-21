@@ -6,4 +6,6 @@
 void Joy_init(void);
 void Joy_Task (void *arg);
 
+void Joy_Reset(void);
+
 #endif

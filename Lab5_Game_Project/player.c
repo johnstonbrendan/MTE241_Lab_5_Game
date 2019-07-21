@@ -23,10 +23,19 @@ void player_init(uint16_t initX, uint16_t initY) {
     osMutexRelease(player_loc_id);
 } 
 
+void player_reset(void) {
+	  osMutexAcquire(player_loc_id, osWaitForever);
+				player_info->pos.x = (game_state == LEVEL1) ? PLAYER_L1_INIT_X: PLAYER_L2_INIT_X;
+        player_info->pos.y = (game_state == LEVEL1) ? PLAYER_L1_INIT_Y: PLAYER_L2_INIT_Y;
+        player_info->delta.x = 0; 
+        player_info->delta.y = 0;
+    osMutexRelease(player_loc_id);
+}
+
 void player_task(void* args){ 
 	int16_t horizontalMove,verticalMove = 0;
 
-	while(game_state == LEVEL1 || game_state == LEVEL2) {
+	while(true) {
 		//get the joystick values
 		
 		verticalMove = 0;
