@@ -77,25 +77,25 @@ char_pos_t enemy_path(uint8_t enemy)
 			if (enemy_time < 4095 / 2)
 			{
 				temp_pos.x = 0;
-				temp_pos.y = enemy_time / 27 + 25 + 6;
+				temp_pos.y = enemy_time / 29 + 28;
 			}
 			else
 			{
-				temp_pos.x = (enemy_time - 4095 / 2) / 30;
-				temp_pos.y = 100 + 6;
+				temp_pos.x = (enemy_time - 4095 / 2) / 40;
+				temp_pos.y = 100;
 			}
 			break;
 		case 2:
 			temp_pos.x = enemy_time / 70 + 225;
-			temp_pos.y = 100 + 6;
+			temp_pos.y = 100;
 			break;
 		case 3:
 			temp_pos.x = 150 - enemy_time / 60;
-			temp_pos.y = 175 + 6;
+			temp_pos.y = 175;
 			break;
 		case 4:
 			temp_pos.x = -enemy_time / 100 + +217 - BMP_ENEMY_WIDTH;
-			temp_pos.y = 25 + 6;
+			temp_pos.y = 25;
 		default:
 			return temp_pos;
 		}
