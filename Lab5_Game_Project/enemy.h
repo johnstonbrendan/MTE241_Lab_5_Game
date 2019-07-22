@@ -8,7 +8,7 @@
 #define NUM_OF_L1_ENEMIES 1
 #define NUM_OF_L2_ENEMIES 1
 #else
-#define NUM_OF_L1_ENEMIES 3
+#define NUM_OF_L1_ENEMIES 5
 #define NUM_OF_L2_ENEMIES 7
 
 #endif

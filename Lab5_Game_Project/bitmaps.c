@@ -172,7 +172,7 @@ unsigned char bmp_player_data[30 * 30 * 2 + 1] =
 
  void initializeTargetEnemy() {
 	 if(bmp_tgt_enemy_data == NULL)
-			bmp_tgt_enemy_data = malloc(23*23*2 + 1);
+			bmp_tgt_enemy_data = malloc(BMP_ENEMY_HEIGHT*BMP_ENEMY_WIDTH*2 + 1);
 	 
 	 uint16_t toReplace = 0x0000;
 	 uint16_t replaceWith = 0x0400;
