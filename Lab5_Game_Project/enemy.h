@@ -2,14 +2,14 @@
 #ifndef _ENEMY_H
 #define _ENEMY_H
 
-#define MAX_NUM_OF_ENEMIES 7
+#define MAX_NUM_OF_ENEMIES 8
 
 #if GOD_MODE
 #define NUM_OF_L1_ENEMIES 1
 #define NUM_OF_L2_ENEMIES 1
 #else
 #define NUM_OF_L1_ENEMIES 5
-#define NUM_OF_L2_ENEMIES 7
+#define NUM_OF_L2_ENEMIES 8
 
 #endif
 

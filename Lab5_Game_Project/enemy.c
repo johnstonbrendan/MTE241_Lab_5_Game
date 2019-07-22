@@ -7,6 +7,7 @@
 #include <math.h>
 #include "bitmaps.h"
 #include "GUI.h"
+#include "Player.h"
 
 osMutexId_t enemy_loc_id;
 
@@ -94,7 +95,7 @@ char_pos_t enemy_path(uint8_t enemy)
 			temp_pos.y = 175;
 			break;
 		case 4:
-			temp_pos.x = -enemy_time / 100 + +219 - BMP_ENEMY_WIDTH;
+			temp_pos.x = -enemy_time / 100 + +217 - BMP_ENEMY_WIDTH;
 			temp_pos.y = 25;
 		default:
 			return temp_pos;
@@ -105,33 +106,36 @@ char_pos_t enemy_path(uint8_t enemy)
 		switch (enemy)
 		{
 		case 0:
-			//kinda suss placement
-			temp_pos.x = 270;
-			temp_pos.y = 25 + 6;
+			temp_pos.x = PLAYER_L2_INIT_X + (PLAYER_WIDTH + 5) + enemy_time/90;
+			temp_pos.y = 100;
 			break;
 		case 1:
-			temp_pos.x = 208;
-			temp_pos.y = 75 + 6;
+			temp_pos.x = enemy_time/90 - (PLAYER_WIDTH + 5) + PLAYER_L2_INIT_X;
+			temp_pos.y = 100;
 			break;
 		case 2:
-			temp_pos.x = 140;
-			temp_pos.y = 150 + 6;
+			temp_pos.x = 105 + enemy_time/95 - 20;
+			temp_pos.y = 200;
 			break;
 		case 3:
-			temp_pos.x = 190;
-			temp_pos.y = 150 + 6;
+			temp_pos.x = 105 + 2*ENEMY_WIDTH + 8 +enemy_time/95 - 20;
+			temp_pos.y = 200;
 			break;
 		case 4:
-			temp_pos.x = 99;
-			temp_pos.y = 200 + 6;
+			temp_pos.x = -enemy_time/70 + 222;
+			temp_pos.y = 25;
 			break;
 		case 5:
-			temp_pos.x = 0.01 * enemy_time + 183;
-			temp_pos.y = 200 + 6;
+			temp_pos.x = -enemy_time/150 + 222;
+			temp_pos.y = 25;
 			break;
 		case 6:
-			temp_pos.x = 0.005 * enemy_time + 125;
-			temp_pos.y = 200 + 6;
+			temp_pos.x = -enemy_time/60 + 165;
+			temp_pos.y = 25;
+			break;
+		case 7:
+			temp_pos.x = 105 + ENEMY_WIDTH + 4 +enemy_time/95 - 20;
+			temp_pos.y = 200;
 			break;
 
 		default:

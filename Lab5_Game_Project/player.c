@@ -36,38 +36,41 @@ void player_task(void* args){
 	int16_t horizontalMove,verticalMove = 0;
 
 	while(true) {
-		//get the joystick values
+		if (game_state != MAINMENU){
+				
+			//get the joystick values
+			
+			verticalMove = 0;
+			// do i need to move? 
+			osMutexAcquire(joy_val_id, osWaitForever);
+					horizontalMove = joy_in->left - joy_in->right;
+					if(GOD_MODE) verticalMove = (joy_in->up - joy_in->down);
+					joy_in->right = 0;
+					joy_in->left = 0;
+					joy_in->up = 0;
+					joy_in->down = 0; //maybe make this a function
+			osMutexRelease(joy_val_id);
+				int16_t *intended_x = malloc(sizeof(int16_t));
+				int16_t *intended_y = malloc(sizeof(int16_t));
+			osMutexAcquire(player_loc_id, osWaitForever); 
+				*intended_x = player_info->pos.x + horizontalMove;
+				*intended_y = player_info->pos.y + verticalMove;
 		
-		verticalMove = 0;
-		// do i need to move? 
-		osMutexAcquire(joy_val_id, osWaitForever);
-				horizontalMove = joy_in->left - joy_in->right;
-				if(GOD_MODE) verticalMove = (joy_in->up - joy_in->down);
-				joy_in->right = 0;
-				joy_in->left = 0;
-				joy_in->up = 0;
-				joy_in->down = 0; //maybe make this a function
-		osMutexRelease(joy_val_id);
-			int16_t *intended_x = malloc(sizeof(int16_t));
-			int16_t *intended_y = malloc(sizeof(int16_t));
-		osMutexAcquire(player_loc_id, osWaitForever); 
-			*intended_x = player_info->pos.x + horizontalMove;
-			*intended_y = player_info->pos.y + verticalMove;
-	
-			legalize(intended_x, intended_y);
-			if (horizontalMove && !player_info->teleport)
-			{
-				player_info->delta.x = *intended_x - player_info->pos.x;
-			}
-			if(verticalMove && !player_info->teleport) {
-					player_info->delta.y = *intended_y - player_info->pos.y;
-			}
-		osMutexRelease(player_loc_id);
-		free(intended_x);
-		free(intended_y);
-		osThreadYield();// maybe make this a delay
-		//(osKernelGetSysTimerFreq() / PLAYER_EXEC_FREQ); this was causing major issues
-  }
+				legalize(intended_x, intended_y);
+				if (horizontalMove && !player_info->teleport)
+				{
+					player_info->delta.x = *intended_x - player_info->pos.x;
+				}
+				if(verticalMove && !player_info->teleport) {
+						player_info->delta.y = *intended_y - player_info->pos.y;
+				}
+			osMutexRelease(player_loc_id);
+			free(intended_x);
+			free(intended_y);
+			osThreadYield();// maybe make this a delay
+			//(osKernelGetSysTimerFreq() / PLAYER_EXEC_FREQ); this was causing major issues
+		}
+	}
 }
 
 void legalize(int16_t* x, int16_t* y) {//may be able to just put this into the loop direclty to save space 

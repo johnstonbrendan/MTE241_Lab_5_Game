@@ -21,12 +21,12 @@ uint8_t game_state;
 
 const int8_t left_offset[NUM_LEVELS][NUM_FLOORS] = {
 	{0, -1, -1, 0, -1, -1, 0, -1, -1, -1}, 
-	{0, -1, 3, -1, -1, 0, -1, 0, -1, -1}
+	{0, -1, -1, 0, -1, -1, -1, 0, -1, -1}
 };
 
 const int8_t right_offset[NUM_LEVELS][NUM_FLOORS] = {
 	{0, -1, -1, 3, -1, -1, 0, -1, -1, -1},
-	{0, -1, 0, -1, -1, 2, -1, 5, -1, -1} 
+	{0, -1, -1, 2, -1, -1, -1, 5, -1, -1} 
 };
 
 portal_pair_t portal_pairs[NUM_MAX_PORTALS/2];
@@ -82,12 +82,12 @@ void GUI_Task(void *arg){
 		}	
 		else if (game_state == LEVEL1_COMPLETE){
 			GLCD_Clear(Green);
-			GLCD_DisplayString(20,20,0,"Congrats yo yo you did it!!!!! nOW TRY LEVEL 2 :)");
+			GLCD_DisplayString(20,20,0,"Good job noobie, now do level 2");
 			break;
 		}
 		else if (game_state == LEVEL2_COMPLETE){
 			GLCD_Clear(Red);
-			GLCD_DisplayString(20,20,0,"Congrats yoU COMPLETED LEVEL 2");
+			GLCD_DisplayString(20,20,0,"Congrats u COMPLETED LEVEL 2");
 		}
 	}
 }
@@ -287,7 +287,7 @@ void animate_collisions(void){
 	player_y = player_info->pos.y;
 	osMutexRelease(player_loc_id);
 	osMutexAcquire(enemy_loc_id,osWaitForever);
-	for (int i = 0; i < num_of_enemies; i++){
+	for (int i = num_of_enemies - 1; i >= 0; i--){
 		collision = check_collision(player_x, player_y, enemies[i]->pos.x, enemies[i]->pos.y,
 							PLAYER_HEIGHT,PLAYER_WIDTH, ENEMY_HEIGHT, ENEMY_WIDTH);
 		if (collision){
@@ -300,7 +300,7 @@ void animate_collisions(void){
 	osMutexRelease(enemy_loc_id);
 	if (golden_enemy){//this may need to be similiar to collision above instead of just the x,y
 		osMutexAcquire(game_state_id,osWaitForever);
-		game_state = LEVEL1_COMPLETE;
+		game_state = (game_state == LEVEL1) ? LEVEL1_COMPLETE: LEVEL2_COMPLETE;
 		osMutexRelease(game_state_id);
 	}
 	if (collision && !golden_enemy){
@@ -377,14 +377,16 @@ void GUI_Level_Menu(void){
 	if (button_pushed){
 		button_pushed = false;
 		GLCD_Clear(Black);
+		osMutexAcquire(game_state_id,osWaitForever);
 		if(sel_lev == 1){
 			game_state = LEVEL1;
 		}
 		else{
 			game_state = LEVEL2;
 		}
-		osDelay(100); // kinda hacky
+		osMutexRelease(game_state_id);
 		GUI_Reset_Pot(false);
+		osDelay(500); // kinda hacky
 	}	
 }
 
@@ -472,10 +474,6 @@ void drawPortals(uint8_t level){
 		portal_pairs[3].p1y = L2_portal_6_y;
 		portal_pairs[3].p2x = L2_portal_7_x;
 		portal_pairs[3].p2y = L2_portal_7_y;
-		portal_pairs[4].p1x = L2_portal_8_x;
-		portal_pairs[4].p1y = L2_portal_8_y;
-		portal_pairs[4].p2x = L2_portal_9_x;
-		portal_pairs[4].p2y = L2_portal_9_y;
 		for (int i = NUM_L2_PORTALS/2; i < NUM_MAX_PORTALS/2; i++){
 			portal_pairs[i].p1x = portal_pairs[i].p2x = 1000;
 			portal_pairs[i].p1y = portal_pairs[i].p2y = 1000;
@@ -483,7 +481,7 @@ void drawPortals(uint8_t level){
 	}
 	//put code in here to draw in the portallalalalallassssss
 	for (int i = 0; i < NUM_MAX_PORTALS/2; i++){
-		if ((portal_pairs[i].p1x != portal_pairs[i].p2x) && 
+		if ((portal_pairs[i].p1x != portal_pairs[i].p2x) || 
 				(portal_pairs[i].p1y != portal_pairs[i].p2y)){
 					GLCD_Bitmap(portal_pairs[i].p1x,portal_pairs[i].p1y,BMP_PORTAL_WIDTH,BMP_PORTAL_HEIGHT,BMP_PORTAL_DATA);
 					GLCD_Bitmap(portal_pairs[i].p2x,portal_pairs[i].p2y,BMP_PORTAL_WIDTH,BMP_PORTAL_HEIGHT,BMP_PORTAL_DATA);

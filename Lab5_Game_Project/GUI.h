@@ -21,10 +21,10 @@
 #define NUM_L2_PORTALS 0
 #else
 #define NUM_L1_PORTALS 6
-#define NUM_L2_PORTALS 10
+#define NUM_L2_PORTALS 8
 #endif
 
-#define L1_portal_0_x 217 //make sure the y1 is larger than the y2 and check that they are exactly above the level by a portal height value
+#define L1_portal_0_x 217 //make sure the y1 is smaller than the y2 and check that they are exactly above the level by a portal height value
 #define L1_portal_0_y 25
 #define L1_portal_1_x 253
 #define L1_portal_1_y 100
@@ -37,26 +37,22 @@
 #define L1_portal_5_x 120
 #define L1_portal_5_y 175
 
-#define L2_portal_0_x 291 //make sure the y1 is larger than the y2 and check that they are exactly above the level by a portal height value
-#define L2_portal_0_y 25
-#define L2_portal_1_x 208
-#define L2_portal_1_y 75
-#define L2_portal_2_x 165
+#define L2_portal_0_x 145 //make sure the y1 is smaller than the y2 and check that they are exactly above the level by a portal height value
+#define L2_portal_0_y 100
+#define L2_portal_1_x 160
+#define L2_portal_1_y 200
+#define L2_portal_2_x 232
 #define L2_portal_2_y 25
-#define L2_portal_3_x 53
-#define L2_portal_3_y 75
-#define L2_portal_4_x 122
-#define L2_portal_4_y 75
-#define L2_portal_5_x 40
-#define L2_portal_5_y 150
-#define L2_portal_6_x 162
-#define L2_portal_6_y 150
-#define L2_portal_7_x 247
-#define L2_portal_7_y 200
-#define L2_portal_8_x 237
-#define L2_portal_8_y 75
-#define L2_portal_9_x 295
-#define L2_portal_9_y 200
+#define L2_portal_3_x 145
+#define L2_portal_3_y 25
+#define L2_portal_4_x 295
+#define L2_portal_4_y 25
+#define L2_portal_5_x 295
+#define L2_portal_5_y 200
+#define L2_portal_6_x 170
+#define L2_portal_6_y 25
+#define L2_portal_7_x 45
+#define L2_portal_7_y 100
 
 void GUI_Start(void);
 
