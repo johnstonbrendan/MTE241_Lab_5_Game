@@ -42,7 +42,7 @@ void enemy_task(void *arg){
 		osMutexAcquire(pot_val_id,osWaitForever);
 		//enemy_time = (pot_val - 4095/2);
 		enemy_time = pot_val;
-		enemy_time = enemy_time - enemy_time%10; //this will smooth the graphics as time won't change so easily.
+		enemy_time = enemy_time - enemy_time%100; //this will smooth the graphics as time won't change so easily.
 		osMutexRelease(pot_val_id);
 		osMutexAcquire(enemy_loc_id,osWaitForever);
 		for (int i = 0; i < num_of_enemies; i++){
@@ -103,11 +103,11 @@ char_pos_t enemy_path(uint8_t enemy){
 				temp_pos.y = 200;
 				break;
 			case 5:
-				temp_pos.x = 183;
+				temp_pos.x = 0.01*enemy_time + 183;
 				temp_pos.y = 200;
 				break;
 			case 6:
-				temp_pos.x = 125;
+				temp_pos.x = 0.005*enemy_time + 125;
 				temp_pos.y = 200;
 				break;		
 				
