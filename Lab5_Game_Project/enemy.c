@@ -94,7 +94,7 @@ char_pos_t enemy_path(uint8_t enemy)
 			temp_pos.y = 175;
 			break;
 		case 4:
-			temp_pos.x = -enemy_time / 100 + +217 - BMP_ENEMY_WIDTH;
+			temp_pos.x = -enemy_time / 100 + +219 - BMP_ENEMY_WIDTH;
 			temp_pos.y = 25;
 		default:
 			return temp_pos;
