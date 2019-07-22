@@ -38,7 +38,7 @@ void enemy_task(void *arg){
 	while(true){
 		osMutexAcquire(pot_val_id,osWaitForever);
 		//enemy_time = (pot_val - 4095/2);
-		enemy_time = pot_val;
+		enemy_time = 4095-pot_val;
 		enemy_time = enemy_time - enemy_time%10; //this will smooth the graphics as time won't change so easily.
 		osMutexRelease(pot_val_id);
 		osMutexAcquire(enemy_loc_id,osWaitForever);
@@ -58,19 +58,30 @@ char_pos_t enemy_path(uint8_t enemy){
 	switch (enemy){
 	case 0:
 //		temp_pos.x = (uint32_t)sin(enemy_time);//probably have to multiply this by some value for display
-	temp_pos.x = enemy_time/100 + 100;
-	temp_pos.y = (enemy_time/50)+150;//probably need to adjust this for display
+	temp_pos.x = -enemy_time/100 + 217;
+	temp_pos.y = 25;//probably need to adjust this for display
 		break;
 	case 1:
-		temp_pos.x = enemy_time/100+30;
-		//temp_pos.y = (uint32_t)tan(enemy_time);
-		//temp_pos.y = 20*sin(temp_pos.x)+100;
-		temp_pos.y = (enemy_time/50)+150;
+		if (enemy_time < 4095/2){
+			temp_pos.x = 0;
+			temp_pos.y = enemy_time/27 + 25;
+		}
+		else {
+			temp_pos.x = (enemy_time - 4095/2)/20;
+			temp_pos.y = 100;
+		}
 		break;
 	case 2:
-		temp_pos.x = 200;
-		temp_pos.y = (enemy_time/50)+150;
+		temp_pos.x = enemy_time/70 + 225;
+		temp_pos.y = 100;
 		break;
+	case 3:
+		temp_pos.x =150 - enemy_time/60;
+		temp_pos.y = 175;
+		break;
+	case 4:
+		temp_pos.x = -enemy_time/100 + +217 - BMP_ENEMY_WIDTH;
+		temp_pos.y = 25;
 	default:
 		return temp_pos;
 	}

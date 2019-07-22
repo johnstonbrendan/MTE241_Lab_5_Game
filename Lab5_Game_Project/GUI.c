@@ -58,7 +58,7 @@ void GUI_Task(void *arg){
 			Joy_Reset();
 			GUI_Level_1();
 			if (game_state == RESET_POT){
-				GUI_Reset_Pot();
+				GUI_Reset_Pot(true);
 				osMutexAcquire(game_state_id,osWaitForever);
 				game_state = LEVEL1;
 				osMutexRelease(game_state_id);
@@ -69,7 +69,7 @@ void GUI_Task(void *arg){
 		else if (game_state == LEVEL2){
 			
 			if (game_state == RESET_POT){
-				GUI_Reset_Pot();
+				GUI_Reset_Pot(false);
 				osMutexAcquire(game_state_id,osWaitForever);
 				game_state = LEVEL1;
 				osMutexRelease(game_state_id);
@@ -96,7 +96,6 @@ void GUI_Level_1(void){
 	while(game_state == LEVEL1){
 #if GOD_MODE
 			animate_player();
-	
 #else
 			animate_portals();
 			animate_player();
@@ -358,6 +357,7 @@ void GUI_Level_Menu(void){
 			game_state = LEVEL2;
 		}
 		osDelay(100); // kinda hacky
+		GUI_Reset_Pot(false);
 	}	
 }
 
@@ -452,10 +452,12 @@ void drawPortals(uint8_t level){
 	}
 }
 
-void GUI_Reset_Pot(void){
-	GLCD_Clear(White);
-	GLCD_DisplayString(2,0,0, "Rotate Pot counter   ");
-	GLCD_DisplayString(5,0,0, "clockwise to cont...");
+void GUI_Reset_Pot(bool died){
+	GLCD_Clear(Blue);
+	GLCD_DisplayString(16,8,0, " Rotate Pot counter clockwise to cont... ");
+	if (died){
+		GLCD_DisplayString(18,4,0, " You died, Try Again... or not, I don't mind ");
+	}
 	bool pot_reset = false;
 	while(!pot_reset){
 		pot_reset = (pot_val > 4000) ? true:false;
