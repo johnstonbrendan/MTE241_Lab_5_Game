@@ -31,8 +31,8 @@
 #define L1_portal_2_x 0
 #define L1_portal_2_y 25
 #define L1_portal_3_x 291
-#define L1_portal_3_y 1750
-#define L1_portal_4_x 150
+#define L1_portal_3_y 175
+#define L1_portal_4_x 100
 #define L1_portal_4_y 100
 #define L1_portal_5_x 120
 #define L1_portal_5_y 175
@@ -87,6 +87,6 @@ bool check_collision(uint16_t object_1_x, uint16_t object_1_y, uint16_t object_2
 
 void redraw_all(void);
 
-void GUI_Reset_Pot(void);
+void GUI_Reset_Pot(bool died);
 
 #endif
