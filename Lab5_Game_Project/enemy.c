@@ -77,25 +77,25 @@ char_pos_t enemy_path(uint8_t enemy)
 			if (enemy_time < 4095 / 2)
 			{
 				temp_pos.x = 0;
-				temp_pos.y = enemy_time / 27 + 25;
+				temp_pos.y = enemy_time / 27 + 25 + 6;
 			}
 			else
 			{
-				temp_pos.x = (enemy_time - 4095 / 2) / 20;
-				temp_pos.y = 100;
+				temp_pos.x = (enemy_time - 4095 / 2) / 30;
+				temp_pos.y = 100 + 6;
 			}
 			break;
 		case 2:
 			temp_pos.x = enemy_time / 70 + 225;
-			temp_pos.y = 100;
+			temp_pos.y = 100 + 6;
 			break;
 		case 3:
 			temp_pos.x = 150 - enemy_time / 60;
-			temp_pos.y = 175;
+			temp_pos.y = 175 + 6;
 			break;
 		case 4:
 			temp_pos.x = -enemy_time / 100 + +217 - BMP_ENEMY_WIDTH;
-			temp_pos.y = 25;
+			temp_pos.y = 25 + 6;
 		default:
 			return temp_pos;
 		}
@@ -107,31 +107,31 @@ char_pos_t enemy_path(uint8_t enemy)
 		case 0:
 			//kinda suss placement
 			temp_pos.x = 270;
-			temp_pos.y = 25;
+			temp_pos.y = 25 + 6;
 			break;
 		case 1:
 			temp_pos.x = 208;
-			temp_pos.y = 75;
+			temp_pos.y = 75 + 6;
 			break;
 		case 2:
 			temp_pos.x = 140;
-			temp_pos.y = 150;
+			temp_pos.y = 150 + 6;
 			break;
 		case 3:
 			temp_pos.x = 190;
-			temp_pos.y = 150;
+			temp_pos.y = 150 + 6;
 			break;
 		case 4:
 			temp_pos.x = 99;
-			temp_pos.y = 200;
+			temp_pos.y = 200 + 6;
 			break;
 		case 5:
 			temp_pos.x = 0.01 * enemy_time + 183;
-			temp_pos.y = 200;
+			temp_pos.y = 200 + 6;
 			break;
 		case 6:
 			temp_pos.x = 0.005 * enemy_time + 125;
-			temp_pos.y = 200;
+			temp_pos.y = 200 + 6;
 			break;
 
 		default:
