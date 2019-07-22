@@ -19,10 +19,10 @@
 
 #define ENEMY_WIDTH (20)
 #define ENEMY_HEIGHT (20)
-#define BMP_ENEMY_MARGIN (7)
+#define BMP_ENEMY_MARGIN (6)
 #define BMP_ENEMY_DATA ((unsigned char*) bmp_enemy_data)
 #define BMP_TGT_ENEMY_DATA ((unsigned char*) bmp_tgt_enemy_data)
-#define BMP_ENEMY_HEIGHT (ENEMY_HEIGHT + BMP_COLOR_BORDER)
+#define BMP_ENEMY_HEIGHT (ENEMY_HEIGHT + BMP_COLOR_BORDER + BMP_ENEMY_MARGIN)
 #define BMP_ENEMY_WIDTH (ENEMY_WIDTH + BMP_COLOR_BORDER+ BMP_ENEMY_MARGIN)
 	
 #define PLAYER_WIDTH (25)
@@ -35,16 +35,12 @@
 
 
 extern const unsigned char grassblock[20 * 25 * 2 + 1];
-extern const unsigned char bmp_enemy_data[30*23*2 + 1];
+extern const unsigned char bmp_enemy_data[29*29*2 + 1];
 extern unsigned char *bmp_tgt_enemy_data;
 extern unsigned char bmp_player_data[30*30*2 + 1];
 
 void togglePlayerBitmap();
 void initializeTargetEnemy();
-
-
-
-
 
 //extern const unsigned char enemy_empty_map[10*10*2];
 
