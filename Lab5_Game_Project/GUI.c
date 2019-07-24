@@ -499,6 +499,7 @@ void GUI_Reset_Pot(bool died){
 	bool pot_reset = false;
 	while(!pot_reset){
 		pot_reset = (pot_val > 4000) ? true:false;
+		button_pushed = false;
 	}
 }
 
