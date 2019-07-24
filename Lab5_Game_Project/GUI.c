@@ -375,6 +375,7 @@ void GUI_Level_Menu(void){
 	}
 	
 	if (button_pushed){
+		osDelay(200);
 		button_pushed = false;
 		GLCD_Clear(Black);
 		osMutexAcquire(game_state_id,osWaitForever);
