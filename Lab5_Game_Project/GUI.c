@@ -72,7 +72,7 @@ void GUI_Task(void *arg){
 			Joy_Reset();
 			GUI_Level_2();
 			if (game_state == RESET_POT){
-				GUI_Reset_Pot(false);
+				GUI_Reset_Pot(true);
 				osMutexAcquire(game_state_id,osWaitForever);
 				game_state = LEVEL2;
 				osMutexRelease(game_state_id);
