@@ -1,4 +1,4 @@
-# MTE241_Lab_5_Game
+# MTE241 Lab 5 - Game
 Created a 2D Platformer with a twist to be run on the Kiel Development Boards. 
 The game consisted of the player, enemies, portals and a target enemy. 
 The goal of the game was to catch the target enemy while avoiding contact with other enemies. 
