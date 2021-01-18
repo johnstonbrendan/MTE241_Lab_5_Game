@@ -6,4 +6,4 @@ The twist was that time for the enemies was frozen, so you could change time for
 however the player could move freely. 2 Puzzles were created to demonstrate the game dynamics.
 
 Demo Link:
-https://photos.app.goo.gl/JSEfAmp1pwkretjc9
+[![Link to YouTube Demo](http://img.youtube.com/vi/W1BKjs5j1X8/0.jpg)](http://www.youtube.com/watch?v=W1BKjs5j1X8 "RTOS Game Demo Video")
